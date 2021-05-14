@@ -28,6 +28,9 @@ class ModalManager {
         modal.classList.add("modal-active");
     }
 
+    /**
+     * Close all modals and the modal container.
+     */
     close() {
         const modals = document.getElementsByClassName("modal");
         const modalsArray = Array.from(modals);
@@ -66,4 +69,10 @@ const uploadButton = document.getElementById("upload");
 
 uploadButton.addEventListener("click", () => {
     modals.activate("createPost");
-});
+})
+
+const previewButton = document.getElementById("preview");
+
+previewButton.addEventListener("click", () => {
+    modals.activate("previewPost");
+})

@@ -213,8 +213,10 @@ header {
   border-radius: 50%;
 
   background: opacity($accent-color, 0.4);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  z-index: 1;
 }
 
 // Modal
@@ -234,6 +236,8 @@ header {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 
+  z-index: 2;
+
   &.active {
     display: flex;
   }
@@ -245,7 +249,7 @@ header {
   width: 90vw;
   
   padding: 24px 16px;
-  border-radius: 16px;
+  border-radius: 24px;
 
   background: $secondary-color;
 
@@ -262,24 +266,6 @@ header {
 
     color: white;
     background: $accent-color;
-  }
-
-  .caption-input {
-    overflow-y: auto;
-    max-height: 200px;
-    font-size: 14px;
-    padding: 8px 0px;
-    color: $secondary-text-color;
-  }
-
-  .caption-input:empty::before {
-    font-style: italic;
-    content: "What do you want to say?";
-    color: $tertiary-text-color;
-  }
-
-  .caption-input:focus {
-    outline: none;
   }
 }
 
@@ -299,5 +285,39 @@ header {
 
     border-radius: 50%;
     background: $primary-color;
+  }
+}
+
+#createPost {
+  .caption-input {
+    overflow-y: auto;
+    max-height: 200px;
+    font-size: 14px;
+    padding: 8px 0px;
+    color: $secondary-text-color;
+  }
+
+  .caption-input:empty::before {
+    font-style: italic;
+    content: "What do you want to say?";
+    color: $tertiary-text-color;
+  }
+
+  .caption-input:focus {
+    outline: none;
+  }
+}
+
+#previewPost {
+  padding: 12px 8px;
+}
+
+.post-preview {
+  .cover-container {
+    border-radius: 16px;
+  }
+
+  .caption {
+    margin-bottom: 0;
   }
 }
