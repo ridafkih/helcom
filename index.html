@@ -14,15 +14,16 @@
   </head>
   <body>
     <!-- Modal Container -->
-    <div id="modalContainer">
-      <div class="modal">
+    <div id="modalsContainer">
+      <div class="modal" id="createPost">
         <div class="modal-header">
           <div class="modal-title">Create Post</div>
           <button class="modal-close"></button>
         </div>
-        <div class="caption-input" contenteditable="true">asdasd</div>
-        <button class="modal-proceed">Preview Post</button>
+        <div class="caption-input" contenteditable="true"></div>
+        <button class="modal-button" id="preview">Preview Post</button>
       </div>
+      <div class="modal" id="previewPost"></div>
     </div>
     <!-- Header Element -->
     <header class="header">
@@ -164,5 +165,7 @@
       </div>
     </main>
     <button id="upload"></button>
+    <!-- Scripts -->
+    <script src="script.js"></script>
   </body>
 </html>

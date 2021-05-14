@@ -219,23 +219,28 @@ header {
 
 // Modal
 
-#modalContainer {
+#modalsContainer {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 
   background: #00000050;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+
+  &.active {
+    display: flex;
+  }
 }
 
 .modal {
+  display: none;
   box-sizing: border-box;
   width: 90vw;
   
@@ -244,7 +249,11 @@ header {
 
   background: $secondary-color;
 
-  .modal-proceed {
+  &.modal-active {
+    display: block;
+  }
+
+  .modal-button {
     width: 100%;
     padding: 16px;
     
@@ -256,9 +265,11 @@ header {
   }
 
   .caption-input {
+    overflow-y: auto;
+    max-height: 200px;
     font-size: 14px;
     padding: 8px 0px;
-    color: $quinary-text-color;
+    color: $secondary-text-color;
   }
 
   .caption-input:empty::before {

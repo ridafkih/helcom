@@ -1,6 +1,7 @@
 button {
   outline: none;
-  border: none; }
+  border: none;
+  font-family: inherit; }
 
 * {
   padding: 0;
@@ -145,26 +146,31 @@ header {
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px); }
 
-#modalContainer {
+#modalsContainer {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   background: #00000050;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px); }
+  #modalsContainer.active {
+    display: flex; }
 
 .modal {
+  display: none;
   box-sizing: border-box;
   width: 90vw;
   padding: 24px 16px;
   border-radius: 16px;
   background: #1F252C; }
-  .modal .modal-proceed {
+  .modal.modal-active {
+    display: block; }
+  .modal .modal-button {
     width: 100%;
     padding: 16px;
     margin-top: 16px;
@@ -172,9 +178,11 @@ header {
     color: white;
     background: #4F94EB; }
   .modal .caption-input {
+    overflow-y: auto;
+    max-height: 200px;
     font-size: 14px;
     padding: 8px 0px;
-    color: #48515B; }
+    color: #DCE6F2; }
   .modal .caption-input:empty::before {
     font-style: italic;
     content: "What do you want to say?";
