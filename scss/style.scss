@@ -8,3 +8,49 @@ body {
 
   margin: 0;
 }
+
+body {
+  background: $primary-color;
+  color: $primary-text-color;
+
+  font-family: "Inter", sans-serif;
+
+  & > * {
+    padding: 0 16px;
+  }
+}
+
+header {
+  height: 88px;
+  width: 100%;
+
+  padding-top: 32px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  $innerSize: 32px;
+
+  .header-menu {
+    width: $innerSize;
+    height: $innerSize;
+    
+    border-radius: 8px;
+  
+    border: none;
+    outline: none;
+  
+    background: $secondary-color;
+    color: $casual-blue;
+  }
+
+  .header-avatar {
+    width: $innerSize;
+    height: $innerSize;
+  }
+}
+
+.title {
+  margin: 32px 0;
+}

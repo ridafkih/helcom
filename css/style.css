@@ -8,3 +8,32 @@ body {
   width: 100%;
   height: 100%;
   margin: 0; }
+
+body {
+  background: #161A1F;
+  color: white;
+  font-family: "Inter", sans-serif; }
+  body > * {
+    padding: 0 16px; }
+
+header {
+  height: 88px;
+  width: 100%;
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  header .header-menu {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: #1F252C;
+    color: #4F94EB; }
+  header .header-avatar {
+    width: 32px;
+    height: 32px; }
+
+.title {
+  margin: 32px 0; }
