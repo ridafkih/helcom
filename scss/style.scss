@@ -1,5 +1,10 @@
+@import './overwrites';
 @import './resets';
 @import './variables';
+
+@function opacity($hex, $opacity) {
+  @return rgba($hex, $opacity)
+}
 
 html,
 body {
@@ -38,11 +43,8 @@ header {
     
     border-radius: 8px;
   
-    border: none;
-    outline: none;
-  
     background: $secondary-color;
-    color: $casual-blue;
+    color: $accent-color;
   }
 
   .header-avatar {
@@ -51,7 +53,7 @@ header {
   }
 }
 
-.title {
+#title {
   margin: 32px 0;
 }
 
@@ -137,6 +139,14 @@ header {
   font-size: 14px;
   line-height: 1.5em;
   margin: 16px 0;
+
+  &.overflow::after {
+    font-size: 12px;
+    font-weight: 500;
+
+    content: "Read More";
+    color: $accent-color;
+  }
 }
 
 .actions {
@@ -156,9 +166,6 @@ header {
   }
 
   .action-button {
-    outline: none;
-    border: none;
-
     width: 42px;
     height: 42px;
 
@@ -173,4 +180,32 @@ header {
     margin-top: 8px;
     text-align: center;
   }
+}
+
+.action.like:active {
+  color: $love-red;
+  
+  .action-button {
+    background: $love-red;
+    color: white;
+  }
+}
+
+// Upload Button
+
+#upload {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+
+  width: 64px;
+  height: 64px;
+
+  border-radius: 50%;
+
+  background: opacity($accent-color, 0.4);
+  backdrop-filter: blur(8px);
 }

@@ -1,3 +1,7 @@
+button {
+  outline: none;
+  border: none; }
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -27,15 +31,13 @@ header {
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    border: none;
-    outline: none;
     background: #1F252C;
     color: #4F94EB; }
   header .header-avatar {
     width: 32px;
     height: 32px; }
 
-.title {
+#title {
   margin: 32px 0; }
 
 .author {
@@ -94,6 +96,11 @@ header {
   font-size: 14px;
   line-height: 1.5em;
   margin: 16px 0; }
+  .caption.overflow::after {
+    font-size: 12px;
+    font-weight: 500;
+    content: "Read More";
+    color: #4F94EB; }
 
 .actions {
   display: flex;
@@ -107,8 +114,6 @@ header {
   .action:last-child {
     margin-left: auto; }
   .action .action-button {
-    outline: none;
-    border: none;
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -118,3 +123,21 @@ header {
     font-weight: 500;
     margin-top: 8px;
     text-align: center; }
+
+.action.like:active {
+  color: #EC6363; }
+  .action.like:active .action-button {
+    background: #EC6363;
+    color: white; }
+
+#upload {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(79, 148, 235, 0.4);
+  backdrop-filter: blur(8px); }
