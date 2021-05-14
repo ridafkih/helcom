@@ -23,7 +23,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center; }
-  header .header-menu {
+  header .header__menu {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -31,9 +31,20 @@ header {
     outline: none;
     background: #1F252C;
     color: #4F94EB; }
-  header .header-avatar {
+  header .header__avatar {
     width: 32px;
     height: 32px; }
 
 .title {
   margin: 32px 0; }
+
+.post {
+  border-radius: 4px 24px 24px 24px;
+  padding: 4px;
+  background: #1F252C; }
+
+.post__author .avatar__container {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1F252C; }

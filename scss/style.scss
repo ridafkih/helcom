@@ -32,7 +32,7 @@ header {
 
   $innerSize: 32px;
 
-  .header-menu {
+  .header__menu {
     width: $innerSize;
     height: $innerSize;
     
@@ -45,7 +45,7 @@ header {
     color: $casual-blue;
   }
 
-  .header-avatar {
+  .header__avatar {
     width: $innerSize;
     height: $innerSize;
   }
@@ -53,4 +53,23 @@ header {
 
 .title {
   margin: 32px 0;
+}
+
+.post {
+  border-radius: 4px 24px 24px 24px;
+  padding: 4px;
+
+  background: $secondary-color;
+}
+
+.post__author {
+  
+  .avatar__container {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+    background: $secondary-color;
+  }
+
 }
