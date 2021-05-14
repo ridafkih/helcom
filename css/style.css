@@ -94,3 +94,27 @@ header {
   font-size: 14px;
   line-height: 1.5em;
   margin: 16px 0; }
+
+.actions {
+  display: flex;
+  gap: 8px; }
+
+.action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #48515B; }
+  .action:last-child {
+    margin-left: auto; }
+  .action .action-button {
+    outline: none;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #161A1F; }
+  .action .action-label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+    text-align: center; }
