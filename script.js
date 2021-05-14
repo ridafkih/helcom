@@ -5,6 +5,11 @@ class ModalManager {
         const closers = document.getElementsByClassName("modal-close");
         const closersArray = Array.from(closers);
 
+        this._element.addEventListener("click", ev => {
+            if (this._element.isEqualNode(ev.target))
+                this.close();
+        });
+
         closersArray.forEach(closerNode => {
             closerNode.addEventListener("click", () => this.close());
         });
@@ -59,6 +64,6 @@ const modals = new ModalManager();
 
 const uploadButton = document.getElementById("upload");
 
-uploadButton.addEventListener("click", e => {
+uploadButton.addEventListener("click", () => {
     modals.activate("createPost");
 });
