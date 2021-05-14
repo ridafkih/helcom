@@ -1,7 +1,7 @@
 {
   "name": "helcim-coding-challenge",
   "version": "1.0.0",
-  "description": "Helcim Frontend Developer Evaulation",
+  "description": "Helcim Frontend Developer Evaluation",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
