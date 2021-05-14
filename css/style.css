@@ -38,11 +38,6 @@ header {
 .title {
   margin: 32px 0; }
 
-.post-content {
-  border-radius: 4px 24px 24px 24px;
-  padding: 4px;
-  background: #1F252C; }
-
 .author {
   display: flex;
   align-items: center;
@@ -63,6 +58,11 @@ header {
     font-size: 10px;
     color: #6B7785; }
 
+.post {
+  border-radius: 4px 24px 24px 24px;
+  padding: 8px;
+  background: #1F252C; }
+
 .cover-container {
   border-radius: inherit; }
   .cover-container img {
@@ -71,3 +71,26 @@ header {
     width: 100%;
     object-fit: cover;
     border-radius: inherit; }
+
+.post-content {
+  padding: 16px; }
+
+.metadata {
+  font-size: 12px;
+  color: #48515B;
+  display: flex;
+  align-items: center; }
+  .metadata .since::before {
+    display: inline-block;
+    vertical-align: middle;
+    content: "";
+    width: 2px;
+    height: 2px;
+    margin: 0 16px;
+    background: #48515B; }
+
+.caption {
+  color: #6B7785;
+  font-size: 14px;
+  line-height: 1.5em;
+  margin: 16px 0; }

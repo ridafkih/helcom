@@ -55,42 +55,42 @@ header {
   margin: 32px 0;
 }
 
-.post-content {
-  border-radius: 4px 24px 24px 24px;
-  padding: 4px;
-
-  background: $secondary-color;
-}
-
 .author {
   display: flex;
   align-items: center;
-
+  
   margin-bottom: 8px;
 }
-  
+
 .avatar-container {
   width: 32px;
   height: 32px;
-
+  
   border-radius: 50%;
   background: $secondary-color;
 }
 
 .author-identity {
   margin-left: 12px;
-
+  
   .username {
     font-size: 12px;
     font-weight: 600;
   }
-
+  
   .handle {
     font-size: 10px;
     color: $tertiary-text-color;
   }
 }
-  
+
+.post {
+  border-radius: 4px 24px 24px 24px;
+  padding: 8px;
+
+  background: $secondary-color;
+}
+
 .cover-container {
   border-radius: inherit;
   
@@ -104,6 +104,37 @@ header {
   }
 }
 
+.post-content {
+  padding: 16px;
+}
+
 .metadata {
-  
+  font-size: 12px;
+  color: $quinary-text-color;
+
+  display: flex;
+  align-items: center;
+
+  .since {
+    &::before {
+      display: inline-block;
+      vertical-align: middle;
+
+      content: "";
+
+      width: 2px;
+      height: 2px;
+
+      margin: 0 16px;
+
+      background: $quinary-text-color;
+    }
+  }
+}
+
+.caption {
+  color: $tertiary-text-color;
+  font-size: 14px;
+  line-height: 1.5em;
+  margin: 16px 0;
 }
