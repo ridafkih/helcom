@@ -32,7 +32,7 @@ header {
 
   $innerSize: 32px;
 
-  .header__menu {
+  .header-menu {
     width: $innerSize;
     height: $innerSize;
     
@@ -45,7 +45,7 @@ header {
     color: $casual-blue;
   }
 
-  .header__avatar {
+  .header-avatar {
     width: $innerSize;
     height: $innerSize;
   }
@@ -55,21 +55,55 @@ header {
   margin: 32px 0;
 }
 
-.post {
+.post-content {
   border-radius: 4px 24px 24px 24px;
   padding: 4px;
 
   background: $secondary-color;
 }
 
-.post__author {
-  
-  .avatar__container {
-    width: 24px;
-    height: 24px;
+.author {
+  display: flex;
+  align-items: center;
 
-    border-radius: 50%;
-    background: $secondary-color;
+  margin-bottom: 8px;
+}
+  
+.avatar-container {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  background: $secondary-color;
+}
+
+.author-identity {
+  margin-left: 12px;
+
+  .username {
+    font-size: 12px;
+    font-weight: 600;
   }
 
+  .handle {
+    font-size: 10px;
+    color: $tertiary-text-color;
+  }
+}
+  
+.cover-container {
+  border-radius: inherit;
+  
+  img {
+    min-height: 250px;
+    max-height: 450px;
+
+    width: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+}
+
+.metadata {
+  
 }
