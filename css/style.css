@@ -142,5 +142,55 @@ header {
   height: 64px;
   border-radius: 50%;
   background: rgba(79, 148, 235, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px); }
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px); }
+
+#modalContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00000050;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px); }
+
+.modal {
+  box-sizing: border-box;
+  width: 90vw;
+  padding: 24px 16px;
+  border-radius: 16px;
+  background: #1F252C; }
+  .modal .modal-proceed {
+    width: 100%;
+    padding: 16px;
+    margin-top: 16px;
+    border-radius: 8px;
+    color: white;
+    background: #4F94EB; }
+  .modal .caption-input {
+    font-size: 14px;
+    padding: 8px 0px;
+    color: #48515B; }
+  .modal .caption-input:empty::before {
+    font-style: italic;
+    content: "What do you want to say?";
+    color: #6B7785; }
+  .modal .caption-input:focus {
+    outline: none; }
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px; }
+  .modal-header .modal-title {
+    font-size: 24px;
+    font-weight: 700; }
+  .modal-header .modal-close {
+    padding: 16px;
+    border-radius: 50%;
+    background: #161A1F; }

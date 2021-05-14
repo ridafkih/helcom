@@ -213,6 +213,80 @@ header {
   border-radius: 50%;
 
   background: opacity($accent-color, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+// Modal
+
+#modalContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #00000050;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal {
+  box-sizing: border-box;
+  width: 90vw;
+  
+  padding: 24px 16px;
+  border-radius: 16px;
+
+  background: $secondary-color;
+
+  .modal-proceed {
+    width: 100%;
+    padding: 16px;
+    
+    margin-top: 16px;
+    border-radius: 8px;
+
+    color: white;
+    background: $accent-color;
+  }
+
+  .caption-input {
+    font-size: 14px;
+    padding: 8px 0px;
+    color: $quinary-text-color;
+  }
+
+  .caption-input:empty::before {
+    font-style: italic;
+    content: "What do you want to say?";
+    color: $tertiary-text-color;
+  }
+
+  .caption-input:focus {
+    outline: none;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .modal-close {
+    padding: 16px;
+
+    border-radius: 50%;
+    background: $primary-color;
+  }
 }
