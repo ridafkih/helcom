@@ -116,11 +116,22 @@ previewModal.addEventListener(
   { passive: true }
 );
 
-previewModal.addEventListener("touchend", () => {
-  console.log(calculateMomentum(touchHistory));
-  touchHistory = [];
+previewModal.addEventListener("touchend", (ev) => {
+	const momentum = calculateMomentum(touchHistory);
+	const threshold = 15;
+
+	let targetPosition;	
+	if (momentum > threshold) {
+		targetPosition = "100vh";
+	} else if (momentum < -threshold) {
+		targetPosition = "-100vh";
+	} else {
+		targetPosition = "0";
+	}
+	
+	previewModal.style.transform = `translateY(${targetPosition})`;
   previewModal.classList.remove("dragging");
-  previewModal.style.transform = "translateY(0)";
+  touchHistory = [];
 });
 
 function calculateMomentum(history = touchHistory) {

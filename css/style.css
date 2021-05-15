@@ -166,6 +166,7 @@ header {
     display: flex; }
 
 .modal {
+  position: relative;
   display: none;
   box-sizing: border-box;
   width: 90vw;
@@ -216,6 +217,20 @@ header {
   animation-delay: 2s; }
   #previewPost.dragging {
     transition: none; }
+  #previewPost::before, #previewPost::after {
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    font-weight: 600; }
+  #previewPost::before {
+    top: -32px;
+    content: "Swipe Up to Publish"; }
+  #previewPost::after {
+    bottom: -32px;
+    content: "Swipe Down to Edit"; }
 
 .post-preview .cover-container {
   border-radius: 16px; }

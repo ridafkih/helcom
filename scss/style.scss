@@ -248,6 +248,7 @@ header {
 }
 
 .modal {
+  position: relative;
   display: none;
   box-sizing: border-box;
   width: 90vw;
@@ -320,6 +321,30 @@ header {
 
   &.dragging {
     transition: none;
+  }
+
+  $distanceFromElement: 32px;
+
+  &::before,
+  &::after {
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &::before {
+    top: -$distanceFromElement;
+    content: "Swipe Up to Publish";
+  }
+  
+  &::after {
+    bottom: -$distanceFromElement;
+    content: "Swipe Down to Edit";
   }
 }
 
