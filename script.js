@@ -79,14 +79,107 @@ class ContentManager {
     this.caption = text;
   }
 
-	publish() {
-		this.reset();
-	}
+  publish() {
+    this.reset();
+  }
 
   reset() {
     this._input.textContent = "";
     this.setCaption();
   }
+}
+
+class FeedPost {
+  constructor() {
+    this.images = [];
+    this.posted = new Date();
+    this.caption = "";
+
+    this.reactions = {
+      likes: 0,
+      comments: 0,
+      shares: 0,
+    };
+  }
+
+  /**
+   * Return the caption node with resizing.
+   * @param {number} cutoff - The text limit.
+   * @returns {HTMLDivElement} - The caption node.
+   */
+  parseCaption = (cutoff = 240) => {
+    const paragraph = createElement("p", null, "caption");
+
+    const head = this.caption.substr(0, cutoff),
+      		tail = this.caption.substr(cutoff);
+
+    const preview = createElement("span", head, "preview");
+    paragraph.appendChild(preview);
+
+    if (tail) {
+      const ellipses = createElement("span", "...", "ellipses"),
+        		hidden = createElement("span", tail, "hidden");
+      paragraph.append(ellipses, hidden);
+    }
+
+    return paragraph;
+  }
+
+  /**
+   * Import FeedPost data from a node.
+   * @param {HTMLElement} node - The node element.
+	 * @returns {FeedPost} - The resulting feed post.
+   */
+  importFromNode = (node) => {
+		const { posted } = node.dataset;
+
+    this.images = Array.from(node.querySelectorAll(".cover-container img"));
+    this.posted = new Date(parseInt(posted));
+
+		const captionElement = node.querySelector(".caption");
+    this.caption = captionElement.textContent;
+		registerCollapseToggle(captionElement);
+
+    this.reactions = getActionsCount(node);
+		return this;
+  }
+}
+
+/**
+ * Register an event emitter that allows a paragraph element to collapse.
+ * @param {HTMLParagraphElement} element - The collapsable paragraph element.
+ */
+function registerCollapseToggle(element) {
+  if (element.children.length <= 1) return;
+  element.addEventListener("click", () => {
+    element.classList.toggle("collapsed");
+  });
+}
+
+/**
+ *
+ * @param {string} tag - The HTML tag.
+ * @param {string} textContent - Text content of the node.
+ * @param  {...string} classNames - Spread classList.
+ * @returns {HTMLElement} - The HTML Element.
+ */
+function createElement(tag, textContent, ...classNames) {
+  const element = document.createElement(tag);
+  element.classList.add(classNames);
+  if (textContent) element.textContent = textContent;
+  return element;
+}
+
+function getActionsCount(parentNode) {
+  const likes = parseInt(getActionCount(parentNode, "like")) || 0,
+    comments = parseInt(getActionCount(parentNode, "comment")) || 0;
+  shares = parseInt(getActionCount(parentNode, "share")) || 0;
+
+  return { likes, comments, shares };
+}
+
+function getActionCount(node, className) {
+  return node.querySelector(`.action.${className}`).dataset.count;
 }
 
 const error = new ErrorManager();
@@ -109,6 +202,11 @@ const events = [
 events.forEach(({ event, element, res }) => {
   element.addEventListener(event, res);
 });
+
+const postElements = Array.from(document.querySelectorAll('.post')),
+			posts = postElements.map(new FeedPost().importFromNode);
+
+console.log(posts);
 
 // Post Preview Drag Logic
 
@@ -182,80 +280,4 @@ function calculateMomentum(history = touchHistory) {
       .slice(1)
       .reduce((a, b) => a + b, 0) / history.length;
   return momentum || 0;
-}
-
-class FeedPost {	
-	constructor() {
-		this.images = [];
-		this.posted = new Date();
-		this.caption = "";
-
-		this.reactions = {
-			likes: 0,
-			comments: 0,
-			shares: 0,
-		}
-	}
-
-	/**
-	 * Return the caption node with resizing.
-	 * @param {number} cutoff - The text limit.
-	 * @returns {HTMLDivElement} - The caption node. 
-	 */
-	parseCaption(cutoff = 240) {
-		const paragraph = createElement("p", null, "caption");
-		
-		const head = this.caption.substr(0, cutoff),
-					tail = this.caption.substr(cutoff);
-
-		const preview = createElement("span", head, "preview");
-		paragraph.appendChild(preview);
-
-		if (tail) {
-			const ellipses = createElement("span", "...", "ellipses"),
-						hidden = createElement("span", tail, "hidden");
-			paragraph.append(ellipses, hidden);
-		}
-
-		return paragraph;
-	}
-
-	/**
-	 * Import FeedPost data from a node.
-	 * @param {HTMLElement} node - The node element. 
-	 */
-	importFromNode(node) {
-		this.images = Array.from(node.querySelectorAll('.cover-container img'));
-		this.posted = new Date(node.dataset.posted);
-		this.caption = node.querySelector('.caption').textContent;
-
-		this.reactions = getActionsCount(node);
-	}
-}
-
-/**
- * 
- * @param {string} tag - The HTML tag.
- * @param {string} textContent - Text content of the node.
- * @param  {...string} classNames - Spread classList.
- * @returns {HTMLElement} - The HTML Element.
- */
-function createElement(tag, textContent, ...classNames) {
-	const element = document.createElement(tag);
-	element.classList.add(classNames);
-	if (textContent)
-		element.textContent = textContent;
-	return element;
-}
-
-function getActionsCount(parentNode) {
-	const likes = parseInt(getActionCount(parentNode, "like")) || 0,
-				comments = parseInt(getActionCount(parentNode, "comment")) || 0;
-				shares = parseInt(getActionCount(parentNode, "share")) || 0;
-
-	return { likes, comments, shares };
-}
-
-function getActionCount(node, className) {
-	return node.querySelector(`.action.${className}`).dataset.count;
 }
