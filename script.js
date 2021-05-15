@@ -21,7 +21,9 @@ class ModalManager {
      */
     activate(id) {
         this.close();
+        
         const modal = document.getElementById(id);
+        document.body.classList.add("no-overflow");
         if (!modal)
             return error.log("Modal does not exist.");
         this._element.classList.add("active");
@@ -34,6 +36,7 @@ class ModalManager {
     close() {
         const modals = document.getElementsByClassName("modal");
         const modalsArray = Array.from(modals);
+        document.body.classList.remove("no-overflow");
         
         this._element.classList.remove("active");
         modalsArray.forEach(modalNode => {
