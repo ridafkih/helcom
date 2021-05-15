@@ -1,6 +1,6 @@
 import { createElement } from "../services/dom.service.js";
 
-const template = document.getElementById("postTemplate");
+const template = document.querySelector("#postTemplate");
 
 /**
  * A timeline post module.

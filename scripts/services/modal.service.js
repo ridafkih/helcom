@@ -1,14 +1,14 @@
 export default class ModalService {
-  _element = document.getElementById("modalsContainer");
+  _element = document.querySelector("#modalsContainer");
   _events = [
     {
       event: "click",
-      element: document.getElementById("upload"),
+      element: document.querySelector("#upload"),
       res: () => this.activate("createPost"),
     },
     {
       event: "click",
-      element: document.getElementById("preview"),
+      element: document.querySelector("#preview"),
       res: () => this.activate("previewPost"),
     },
   ];
