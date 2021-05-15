@@ -40,6 +40,73 @@ export default class PostModule extends HTMLElement {
   }
 
   /**
+   * Set the author of the post module.
+   * @param {string} fullName - The full name of the user.
+   * @param {string} handle - The users handle.
+   * @returns {PostModule} - The post module.
+   */
+  setAuthor(fullName, handle) {
+    this.author.fullName = fullName;
+    this.author.handle = handle;
+
+    this.querySelector(".full-name").textContent = fullName;
+    this.querySelector(".handle").textContent = handle;
+
+    return this;
+  }
+
+  /**
+   * Sets the caption of the post module.
+   * @param {string} caption - The new caption for the post.
+   * @returns {PostModule} - The post module.
+   */
+  setCaption(caption) {
+    this.caption = caption;
+    this.parseCaption();
+    return this;
+  }
+
+  /**
+   * Sets the date of the new post.
+   * @param {Date} date - The target date.
+   * @returns {PostModule} - The post module.
+   */
+  setDate(date = new Date()) {
+    this.posted = date;
+    document.querySelector(".post").dataset.posted = date;
+    return this;
+  }
+
+  /**
+   * Updates the amount of
+   * @param {{
+   *  likes: number,
+   *  comments: number,
+   *  shares: number 
+   * }} opts - The options containing the target reaction counts.
+   * @returns {PostModule} - The post module.
+   */
+  setReactions({
+    likes = this.reactions.likes,
+    comments = this.reactions.comments,
+    shares = this.reactions.shares,
+  }) {
+    const likeContainer = document.querySelector(".action.like");
+    const commentContainer = document.querySelector(".action.comment");
+    const shareContainer = document.querySelector(".action.share");
+
+    likeContainer.dataset.count = likes;
+    commentContainer.dataset.count = comments;
+    shareContainer.dataset.count = shares;
+
+    this.reactions.likes = likeContainer.dataset.count;
+    this.reactions.comments = commentContainer.dataset.count;
+    this.reactions.shares = shareContainer.dataset.count;
+
+    return this;
+  }
+
+  /**
    * Resizes the caption for easy consuming..
    * @param {number} cutoff - The text limit.
    * @returns {HTMLDivElement} - The caption node.
@@ -118,7 +185,7 @@ export default class PostModule extends HTMLElement {
 
   getActionsCount() {
     const likes = parseInt(getActionCount(this.domElement, "like")) || 0;
-		const comments = parseInt(getActionCount(this.domElement, "comment")) || 0;
+    const comments = parseInt(getActionCount(this.domElement, "comment")) || 0;
     const shares = parseInt(getActionCount(this.domElement, "share")) || 0;
 
     return { likes, comments, shares };

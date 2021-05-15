@@ -135,7 +135,8 @@ header {
     height: 42px;
     border-radius: 50%;
     background: #161A1F; }
-  .action .action-label {
+  .action::after {
+    content: attr(data-count);
     font-size: 12px;
     font-weight: 500;
     margin-top: 8px;

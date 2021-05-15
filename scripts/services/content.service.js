@@ -1,3 +1,5 @@
+import PostModule from "../modules/post.module.js";
+
 /**
  * Content Management Service
  */
@@ -102,6 +104,8 @@ export default class ContentService {
   }
 
   publish() {
+    const post = new PostModule();
+
     this.reset();
   }
 

@@ -213,7 +213,8 @@ header {
     background: $primary-color;
   }
 
-  .action-label {
+  &::after {
+    content: attr(data-count);
     font-size: 12px;
     font-weight: 500;
     margin-top: 8px;
