@@ -316,6 +316,8 @@ header {
   padding: 12px 8px;
   transition: 0.32s ease;
 
+  animation-delay: 2s;
+
   &.dragging {
     transition: none;
   }

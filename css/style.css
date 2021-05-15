@@ -212,7 +212,8 @@ header {
 
 #previewPost {
   padding: 12px 8px;
-  transition: 0.32s ease; }
+  transition: 0.32s ease;
+  animation-delay: 2s; }
   #previewPost.dragging {
     transition: none; }
 

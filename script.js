@@ -50,7 +50,7 @@ class ErrorManager {
    * @param {boolean} display - Whether or not you would like the user to see the error.
    */
   log(message, display) {
-    console.error(message);
+    console.warn(message);
     if (display) this.display(message);
   }
 
