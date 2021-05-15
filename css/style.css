@@ -251,7 +251,7 @@ header {
   display: flex;
   gap: 6px;
   overflow-x: auto;
-  padding-bottom: 8px; }
+  padding-bottom: 12px; }
   .attachments-container .attachment,
   .attachments-container .attach {
     min-width: 88px;
