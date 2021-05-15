@@ -117,9 +117,9 @@ export default class PostModule extends HTMLElement {
   };
 
   getActionsCount() {
-    const likes = parseInt(getActionCount(this.domElement, "like")) || 0,
-      comments = parseInt(getActionCount(this.domElement, "comment")) || 0;
-    shares = parseInt(getActionCount(this.domElement, "share")) || 0;
+    const likes = parseInt(getActionCount(this.domElement, "like")) || 0;
+		const comments = parseInt(getActionCount(this.domElement, "comment")) || 0;
+    const shares = parseInt(getActionCount(this.domElement, "share")) || 0;
 
     return { likes, comments, shares };
   }
