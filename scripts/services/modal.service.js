@@ -11,11 +11,11 @@ export default class ModalService {
       element: document.getElementById("preview"),
       res: () => this.activate("previewPost"),
     },
-  ]
+  ];
 
   constructor() {
     const closers = document.getElementsByClassName("modal-close"),
-					closersArray = Array.from(closers);
+      closersArray = Array.from(closers);
 
     this._element.addEventListener("click", (ev) => {
       if (this._element.isEqualNode(ev.target)) this.close();

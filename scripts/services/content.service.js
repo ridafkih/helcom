@@ -13,19 +13,19 @@ export default class ContentService {
   constructor(modalManager) {
     this._modalManager = modalManager;
 
-		this._input.addEventListener("paste", (ev) => {
-			ev.preventDefault();
-			let text = "";
-			if (ev.clipboardData) {
-				text = ev.clipboardData.getData("text/plain");
-			} else if (window.clipboardData) {
-				text = window.clipboardData.getData("Text");
-			}
+    this._input.addEventListener("paste", (ev) => {
+      ev.preventDefault();
+      let text = "";
+      if (ev.clipboardData) {
+        text = ev.clipboardData.getData("text/plain");
+      } else if (window.clipboardData) {
+        text = window.clipboardData.getData("Text");
+      }
 
-			const insertTextSupported = document.queryCommandSupported("insertText");
-			const command = insertTextSupported ? "insertText" : "paste";
-			document.execCommand(command, false, text);
-		});
+      const insertTextSupported = document.queryCommandSupported("insertText");
+      const command = insertTextSupported ? "insertText" : "paste";
+      document.execCommand(command, false, text);
+    });
 
     this._input.addEventListener("input", (ev) => {
       this.setCaption(ev.target.textContent);
@@ -33,42 +33,43 @@ export default class ContentService {
   }
 
   registerSwipeEvents() {
-    let startPosition, touchHistory = [];
+    let startPosition,
+      touchHistory = [];
     const previewModal = document.getElementById("previewPost");
-    
+
     previewModal.addEventListener(
       "touchstart",
       (ev) => {
         previewModal.classList.add("dragging");
         const [{ clientY }] = ev.touches;
         startPosition = clientY;
-    
+
         touchHistory = [];
       },
       { passive: true }
     );
-    
+
     previewModal.addEventListener(
       "touchmove",
       (ev) => {
         const [{ clientY }] = ev.touches;
         const delta = clientY - startPosition;
-    
+
         touchHistory.push(delta);
         if (touchHistory.length > 10) touchHistory.shift();
-    
+
         previewModal.style.transform = `translateY(${delta}px)`;
       },
       { passive: true }
     );
-    
+
     previewModal.addEventListener("touchend", () => {
       const momentum = calculateMomentum(touchHistory);
       const threshold = 15;
-    
+
       let delay = 320;
       let targetPosition, completionTask;
-    
+
       if (momentum > threshold) {
         targetPosition = "100vh";
         completionTask = () => this._modalManager.activate("createPost");
@@ -82,15 +83,15 @@ export default class ContentService {
         targetPosition = "0";
         delay = 0;
       }
-    
+
       previewModal.classList.remove("dragging");
       previewModal.style.transform = `translateY(${targetPosition})`;
-    
+
       setTimeout(() => {
         previewModal.style.transform = `translateY(0)`;
         if (completionTask) completionTask();
       }, delay);
-    
+
       touchHistory = [];
     });
   }
@@ -109,7 +110,7 @@ export default class ContentService {
     this.setCaption();
   }
 }
-      
+
 function calculateMomentum(history = touchHistory) {
   const momentum =
     history
