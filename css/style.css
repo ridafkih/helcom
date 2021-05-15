@@ -101,10 +101,13 @@ header {
   font-size: 14px;
   line-height: 1.5em;
   margin-bottom: 24px; }
-  .caption.overflow::after {
+  .caption.collapsed .ellipses {
+    display: initial; }
+  .caption.collapsed .hidden {
+    display: none; }
+  .caption.collapsed::after {
     font-size: 12px;
     font-weight: 500;
-    margin-left: 8px;
     content: "Read More";
     color: #4F94EB; }
 

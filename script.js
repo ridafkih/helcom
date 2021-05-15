@@ -213,7 +213,7 @@ class FeedPost {
 
 		if (tail) {
 			const ellipses = createElement("span", "...", "ellipses"),
-						hidden = createElement("span", tail, "preview");
+						hidden = createElement("span", tail, "hidden");
 			paragraph.append(ellipses, hidden);
 		}
 

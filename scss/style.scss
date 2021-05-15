@@ -150,13 +150,22 @@ header {
   line-height: 1.5em;
   margin-bottom: 24px;
 
-  &.overflow::after {
-    font-size: 12px;
-    font-weight: 500;
-    margin-left: 8px;
+  &.collapsed {
+    .ellipses {
+      display: initial;
+    }
 
-    content: "Read More";
-    color: $accent-color;
+    .hidden {
+      display: none;
+    }
+
+    &::after {
+      font-size: 12px;
+      font-weight: 500;
+  
+      content: "Read More";
+      color: $accent-color;
+    }
   }
 }
 
