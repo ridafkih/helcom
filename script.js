@@ -76,11 +76,16 @@ const events = [
   },
 ];
 
+const error = new ErrorManager();
+const modals = new ModalManager();
+
 events.forEach(({ event, element, res }) => {
 	element.addEventListener(event, res);
 });
 
 let startPosition;
+let touchHistory = [];
+
 const previewModal = document.getElementById("previewPost");
 
 previewModal.addEventListener(
@@ -89,6 +94,8 @@ previewModal.addEventListener(
 		previewModal.classList.add("dragging");
     const [{ clientY }] = ev.touches;
     startPosition = clientY;
+
+		touchHistory = [];
   },
   { passive: true }
 );
@@ -98,15 +105,26 @@ previewModal.addEventListener(
   (ev) => {
     const [{ clientY }] = ev.touches;
     const delta = clientY - startPosition;
+		
+		touchHistory.push(delta);
+		if (touchHistory.length > 10)
+			touchHistory.shift();
+
     previewModal.style.transform = `translateY(${delta}px)`;
   },
   { passive: true }
 );
 
 previewModal.addEventListener("touchend", () => {
+	console.log(calculateMomentum(touchHistory));
+	touchHistory = [];
 	previewModal.classList.remove("dragging");
 	previewModal.style.transform = "translateY(0)";
 });
 
-const error = new ErrorManager();
-const modals = new ModalManager();
+function calculateMomentum(history = touchHistory) {
+	const momentum = history.map((delta, index) => {
+		return delta - (history[index - 1]);
+	}).slice(1).reduce((a, b) => a + b, 0) / history.length;
+	return momentum || 0;
+}
