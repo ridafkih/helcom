@@ -56,7 +56,7 @@ header {
 
 .author-identity {
   margin-left: 12px; }
-  .author-identity .username {
+  .author-identity .full-name {
     font-size: 12px;
     font-weight: 600; }
   .author-identity .handle {

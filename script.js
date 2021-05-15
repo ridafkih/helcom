@@ -105,6 +105,11 @@ class ContentManager {
 
 class FeedPost {
   constructor() {
+		this.author = { 
+			fullName: null,
+			handle: null
+		}
+
     this.images = [];
     this.posted = new Date();
     this.caption = "";
@@ -145,7 +150,13 @@ class FeedPost {
 	 * @returns {FeedPost} - The resulting feed post.
    */
   importFromNode = (node) => {
-		const { posted } = node.dataset;
+		const fullName = node.querySelector(".full-name").textContent;
+		const handle = node.querySelector(".handle").textContent;
+
+		this.author.fullName = fullName;
+		this.author.handle = handle;
+
+		const { posted } = node.querySelector(".post").dataset;
 
     this.images = Array.from(node.querySelectorAll(".cover-container img")).map(
       ({ src }) => src
@@ -219,7 +230,7 @@ events.forEach(({ event, element, res }) => {
   element.addEventListener(event, res);
 });
 
-const postElements = Array.from(document.querySelectorAll('.post')),
+const postElements = Array.from(document.querySelectorAll('.post-container')),
 			posts = postElements.map(new FeedPost().importFromNode);
 
 console.log(posts);
