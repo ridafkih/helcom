@@ -4,7 +4,7 @@
 export default class ContentService {
   caption = "";
   captionPreview = document.querySelector(".post-preview .caption");
-  _input = document.getElementById("contentInput");
+  _input = document.querySelector("#contentInput");
   _modalManager;
 
   /**
@@ -35,7 +35,7 @@ export default class ContentService {
   registerSwipeEvents() {
     let startPosition,
       touchHistory = [];
-    const previewModal = document.getElementById("previewPost");
+    const previewModal = document.querySelector("#previewPost");
 
     previewModal.addEventListener(
       "touchstart",
