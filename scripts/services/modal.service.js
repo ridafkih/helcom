@@ -14,15 +14,14 @@ export default class ModalService {
   ];
 
   constructor() {
-    const closers = document.getElementsByClassName("modal-close"),
-      closersArray = Array.from(closers);
+    const closers = Array.from(document.querySelectorAll(".modal-close"));
 
     this._element.addEventListener("click", (ev) => {
       if (this._element.isEqualNode(ev.target)) this.close();
     });
 
-    closersArray.forEach((closerNode) => {
-      closerNode.addEventListener("click", () => this.close());
+    closers.forEach((closer) => {
+      closer.addEventListener("click", () => this.close());
     });
   }
 
@@ -32,7 +31,6 @@ export default class ModalService {
    */
   activate(id) {
     this.close();
-
     const modal = document.getElementById(id);
     document.body.classList.add("no-overflow");
     if (!modal) return error.log("Modal does not exist.");
@@ -44,12 +42,11 @@ export default class ModalService {
    * Close all modals and the modal container.
    */
   close() {
-    const modals = document.getElementsByClassName("modal");
-    const modalsArray = Array.from(modals);
+    const modals = Array.from(document.querySelectorAll(".modal"));
     document.body.classList.remove("no-overflow");
 
     this._element.classList.remove("active");
-    modalsArray.forEach((modalNode) => {
+    modals.forEach((modalNode) => {
       modalNode.classList.remove("modal-active");
     });
   }

@@ -35,9 +35,7 @@ export default class PostModule extends HTMLElement {
 
   connectedCallback() {
     if (this._nodeImport) this.importFromNode(this._nodeImport);
-
     if (!this.innerHTML.trim()) this.innerHTML = template.innerHTML;
-
     this.registerCaption();
   }
 
