@@ -153,6 +153,7 @@ header {
   &.overflow::after {
     font-size: 12px;
     font-weight: 500;
+    margin-left: 8px;
 
     content: "Read More";
     color: $accent-color;

@@ -63,6 +63,32 @@ class ErrorManager {
   }
 }
 
+class ContentManager {
+	caption = "";
+	captionPreview = document.querySelector('.post-preview .caption');
+	_input = document.getElementById("contentInput");
+
+	constructor() {
+		this._input.addEventListener("input", (ev) => {
+			this.setCaption(ev.target.textContent);
+		})
+	}
+
+	setCaption(text = "") {
+		this.captionPreview.textContent = text;
+		this.caption = text;
+	}
+
+	reset() {
+		this._input.textContent = "";
+		this.setCaption();
+	}
+}
+
+const error = new ErrorManager();
+const modals = new ModalManager();
+const content = new ContentManager();
+
 const events = [
   {
     event: "click",
@@ -75,9 +101,6 @@ const events = [
     res: () => modals.activate("previewPost"),
   },
 ];
-
-const error = new ErrorManager();
-const modals = new ModalManager();
 
 events.forEach(({ event, element, res }) => {
   element.addEventListener(event, res);
@@ -140,11 +163,11 @@ previewModal.addEventListener("touchend", () => {
 
   previewModal.classList.remove("dragging");
   previewModal.style.transform = `translateY(${targetPosition})`;
+
   setTimeout(() => {
+    previewModal.style.transform = `translateY(0)`;
     if (completionTask)
 			completionTask();
-			
-    previewModal.style.transform = `translateY(0)`;
   }, delay);
 
   touchHistory = [];
@@ -152,6 +175,7 @@ previewModal.addEventListener("touchend", () => {
 
 function publish() {
   console.log("Publish Complete!");
+	content.reset();
 }
 
 function calculateMomentum(history = touchHistory) {
