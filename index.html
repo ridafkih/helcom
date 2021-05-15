@@ -20,16 +20,20 @@
           <div class="modal-title">Create Post</div>
           <button class="modal-close"></button>
         </div>
-        <div class="caption-input" contenteditable="true" id="contentInput"></div>
+        <div
+          class="caption-input"
+          contenteditable="true"
+          id="contentInput"
+        ></div>
         <div class="attachments-container">
           <div class="attachment">
-            <img src="" alt="" srcset="">
+            <img src="" alt="" srcset="" />
           </div>
           <div class="attachment">
-            <img src="" alt="" srcset="">
+            <img src="" alt="" srcset="" />
           </div>
           <div class="attachment">
-            <img src="" alt="" srcset="">
+            <img src="" alt="" srcset="" />
           </div>
           <button class="attach"></button>
         </div>
@@ -68,7 +72,8 @@
     <h1 id="title">For You</h1>
     <!-- Main Body Content -->
     <main>
-      <div class="post-container">
+      <post-element></post-element>
+      <post-element>
         <div class="author">
           <div class="avatar-container">
             <img src="" alt="" class="avatar" />
@@ -92,11 +97,15 @@
               <div class="since">6h</div>
             </div>
             <p class="caption collapsed">
-              <span class="preview">In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly</span>
+              <span class="preview"
+                >In publishing and graphic design, Lorem ipsum is a placeholder
+                text commonly</span
+              >
               <span class="ellipses">...</span>
-              <span class="hidden">used to demonstrate the visual form of a document or
-                a typeface.</span>
+              <span class="hidden"
+                >used to demonstrate the visual form of a document or a
+                typeface.</span
+              >
             </p>
             <div class="actions">
               <div class="action like" data-count="3412">
@@ -114,11 +123,64 @@
             </div>
           </div>
         </div>
-      </div>
+      </post-element>
     </main>
     <button id="upload"></button>
+    <!-- Post Template -->
+    <template id="postTemplate">
+      <div class="author">
+        <div class="avatar-container">
+          <img src="" alt="" class="avatar" />
+        </div>
+        <div class="author-identity">
+          <div class="full-name">Full Name</div>
+          <div class="handle">@username</div>
+        </div>
+      </div>
+      <div class="post" data-posted="">
+        <div class="cover-container">
+          <img
+            src="./public/images/placeholder-post.png"
+            alt=""
+            class="cover"
+          />
+        </div>
+        <div class="post-content">
+          <div class="metadata">
+            <div class="date">May 14, 2021</div>
+            <div class="since">6h</div>
+          </div>
+          <p class="caption collapsed">
+            <span class="preview"
+              >In publishing and graphic design, Lorem ipsum is a placeholder
+              text commonly</span
+            >
+            <span class="ellipses">...</span>
+            <span class="hidden"
+              >used to demonstrate the visual form of a document or a
+              typeface.</span
+            >
+          </p>
+          <div class="actions">
+            <div class="action like" data-count="0">
+              <button class="action-button"></button>
+              <div class="action-label">0</div>
+            </div>
+            <div class="action comment" data-count="0">
+              <button class="action-button"></button>
+              <div class="action-label">0</div>
+            </div>
+            <div class="action share" data-count="0">
+              <button class="action-button"></button>
+              <div class="action-label">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
     <!-- Scripts -->
-    <script> </script> <!-- Chrome Transition Bug Fix -->
-    <script src="script.js"></script>
+    <script></script>
+    <!-- Chrome Transition Bug Fix -->
+    <script type="module" src="script.js"></script>
   </body>
 </html>
