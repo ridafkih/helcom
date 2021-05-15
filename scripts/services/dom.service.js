@@ -7,7 +7,7 @@
  */
 export function createElement(tag, textContent, ...classNames) {
   const element = document.createElement(tag);
-  element.classList.add(classNames);
+  element.classList.add(...classNames.filter(String));
   if (textContent) element.textContent = textContent;
   return element;
 }

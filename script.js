@@ -9,4 +9,6 @@ const modals = new ModalService().register();
 const content = new ContentService(modals);
 content.registerSwipeEvents();
 
+const post = new PostModule();
+
 const error = new ErrorService();

@@ -44,26 +44,53 @@ export default class PostModule extends HTMLElement {
 	}
 
   /**
-   * Return the caption node with resizing.
+   * Resizes the caption for easy consuming..
    * @param {number} cutoff - The text limit.
    * @returns {HTMLDivElement} - The caption node.
    */
   parseCaption = (cutoff = 240) => {
-    const paragraph = createElement("p", null, "caption");
+		if (!this.caption)
+			this.caption = this.querySelector('.caption').textContent;
+
+		const captionElement = this.querySelector('.caption');
+
+		const collapsable = this.caption.length > cutoff;
+
+    const paragraph = createElement(
+			"p", 
+			null, 
+			"caption",
+			collapsable ? "collapsed" : ""
+		);
+
     const head = this.caption.substr(0, cutoff),
       		tail = this.caption.substr(cutoff);
 
-    const preview = createElement("span", head, "preview");
-    paragraph.appendChild(preview);
-
-    if (tail) {
-      const ellipses = createElement("span", "...", "ellipses"),
+    if (collapsable) {
+			const preview = createElement("span", head, "preview"),
+      			ellipses = createElement("span", "...", "ellipses"),
         		hidden = createElement("span", tail, "hidden");
-      paragraph.append(ellipses, hidden);
-    }
+      paragraph.append(preview, ellipses, hidden);
+    } else {
+			paragraph.textContent = this.caption;
+		}
 
-    return paragraph;
+		captionElement.replaceWith(paragraph);
   }
+
+	/**
+	 * Register an event emitter that allows a paragraph
+	 * element to collapse.
+	 */
+	registerCaption = () => {		
+		this.parseCaption();
+
+		const element = this.querySelector(".caption");
+		if (element.children.length <= 1) return;
+		element.addEventListener("click", () => {
+			element.classList.toggle("collapsed");
+		});
+	}
 
 	generateDomElement = () => {
 		
@@ -102,19 +129,6 @@ export default class PostModule extends HTMLElement {
 					shares = parseInt(getActionCount(this.domElement, "share")) || 0;
 	
 		return { likes, comments, shares };
-	}
-
-	/**
-	 * Register an event emitter that allows a paragraph
-	 * element to collapse.
-	 */
-	registerCaption = () => {
-		const element = this.querySelector(".caption");
-		if (element.children.length <= 1) return;
-		element.addEventListener("click", () => {
-			element.classList.toggle("collapsed");
-		});
-    this.caption = element.textContent;
 	}
 }
 		
