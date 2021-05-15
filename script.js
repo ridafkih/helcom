@@ -65,12 +65,12 @@ class ErrorManager {
 
 const events = [
   {
-		event: "click",
+    event: "click",
     element: document.getElementById("upload"),
     res: () => modals.activate("createPost"),
   },
   {
-		event: "click",
+    event: "click",
     element: document.getElementById("preview"),
     res: () => modals.activate("previewPost"),
   },
@@ -80,8 +80,10 @@ const error = new ErrorManager();
 const modals = new ModalManager();
 
 events.forEach(({ event, element, res }) => {
-	element.addEventListener(event, res);
+  element.addEventListener(event, res);
 });
+
+// Post Preview Drag Logic
 
 let startPosition;
 let touchHistory = [];
@@ -91,11 +93,11 @@ const previewModal = document.getElementById("previewPost");
 previewModal.addEventListener(
   "touchstart",
   (ev) => {
-		previewModal.classList.add("dragging");
+    previewModal.classList.add("dragging");
     const [{ clientY }] = ev.touches;
     startPosition = clientY;
 
-		touchHistory = [];
+    touchHistory = [];
   },
   { passive: true }
 );
@@ -105,10 +107,9 @@ previewModal.addEventListener(
   (ev) => {
     const [{ clientY }] = ev.touches;
     const delta = clientY - startPosition;
-		
-		touchHistory.push(delta);
-		if (touchHistory.length > 10)
-			touchHistory.shift();
+
+    touchHistory.push(delta);
+    if (touchHistory.length > 10) touchHistory.shift();
 
     previewModal.style.transform = `translateY(${delta}px)`;
   },
@@ -116,15 +117,19 @@ previewModal.addEventListener(
 );
 
 previewModal.addEventListener("touchend", () => {
-	console.log(calculateMomentum(touchHistory));
-	touchHistory = [];
-	previewModal.classList.remove("dragging");
-	previewModal.style.transform = "translateY(0)";
+  console.log(calculateMomentum(touchHistory));
+  touchHistory = [];
+  previewModal.classList.remove("dragging");
+  previewModal.style.transform = "translateY(0)";
 });
 
 function calculateMomentum(history = touchHistory) {
-	const momentum = history.map((delta, index) => {
-		return delta - (history[index - 1]);
-	}).slice(1).reduce((a, b) => a + b, 0) / history.length;
-	return momentum || 0;
+  const momentum = 
+    history
+      .map((delta, index) => {
+        return delta - history[index - 1];
+      })
+      .slice(1)
+      .reduce((a, b) => a + b, 0) / history.length;
+  return momentum || 0;
 }
