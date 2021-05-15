@@ -141,7 +141,9 @@ previewModal.addEventListener("touchend", () => {
   previewModal.classList.remove("dragging");
   previewModal.style.transform = `translateY(${targetPosition})`;
   setTimeout(() => {
-    completionTask();
+    if (completionTask)
+			completionTask();
+			
     previewModal.style.transform = `translateY(0)`;
   }, delay);
 
