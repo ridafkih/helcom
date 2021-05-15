@@ -63,23 +63,48 @@ class ErrorManager {
   }
 }
 
-const error = new ErrorManager();
-const modals = new ModalManager();
+const events = [
+  {
+		event: "click",
+    element: document.getElementById("upload"),
+    res: () => modals.activate("createPost"),
+  },
+  {
+		event: "click",
+    element: document.getElementById("preview"),
+    res: () => modals.activate("previewPost"),
+  },
+];
 
-const uploadButton = document.getElementById("upload");
-
-uploadButton.addEventListener("click", () => {
-  modals.activate("createPost");
+events.forEach(({ event, element, res }) => {
+	element.addEventListener(event, res);
 });
 
-const previewButton = document.getElementById("preview");
-
-previewButton.addEventListener("click", () => {
-  modals.activate("previewPost");
-});
-
+let startPosition;
 const previewModal = document.getElementById("previewPost");
 
-previewModal.addEventListener("touchmove", (ev) => {
-	
-}, { passive: true });
+previewModal.addEventListener(
+  "touchstart",
+  (ev) => {
+    const [{ clientY }] = ev.touches;
+    startPosition = clientY;
+  },
+  { passive: true }
+);
+
+previewModal.addEventListener(
+  "touchmove",
+  (ev) => {
+    const [{ clientY }] = ev.touches;
+    const delta = clientY - startPosition;
+    previewModal.style.transform = `translateY(${delta}px)`;
+  },
+  { passive: true }
+);
+
+previewModal.addEventListener("touchend", () => {
+  previewModal.style.transform = "translateY(0)";
+});
+
+const error = new ErrorManager();
+const modals = new ModalManager();
