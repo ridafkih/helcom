@@ -20,6 +20,8 @@ body {
   body > * {
     box-sizing: border-box;
     padding: 0 16px; }
+  body.no-overflow {
+    overflow: hidden; }
 
 header {
   height: 88px;
@@ -187,7 +189,7 @@ header {
   margin-bottom: 16px; }
   .modal-header .modal-title {
     font-size: 24px;
-    font-weight: 700; }
+    font-weight: 600; }
   .modal-header .modal-close {
     padding: 16px;
     border-radius: 50%;
@@ -216,3 +218,19 @@ header {
 
 .post-preview .caption {
   margin-bottom: 0; }
+
+.attachments-container {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px; }
+  .attachments-container .attachment,
+  .attachments-container .attach {
+    min-width: 88px;
+    height: 88px;
+    border-radius: 16px; }
+  .attachments-container .attachment {
+    background: #161A1F; }
+  .attachments-container .attach {
+    background: transparent;
+    border: 2px dashed #6B7785; }

@@ -25,6 +25,10 @@ body {
     box-sizing: border-box;
     padding: 0 16px;
   }
+
+  &.no-overflow {
+    overflow: hidden;
+  }
 }
 
 header {
@@ -277,7 +281,7 @@ header {
 
   .modal-title {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .modal-close {
@@ -319,5 +323,30 @@ header {
 
   .caption {
     margin-bottom: 0;
+  }
+}
+
+.attachments-container {
+  display: flex;
+  gap: 6px;
+
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  .attachment,
+  .attach {
+    min-width: 88px;
+    height: 88px;
+  
+    border-radius: 16px;
+  }
+
+  .attachment {
+    background: $primary-color;
+  }
+
+  .attach {
+    background: transparent;
+    border: 2px dashed $tertiary-text-color;
   }
 }
