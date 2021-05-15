@@ -85,8 +85,7 @@ header {
   font-size: 12px;
   color: #48515B;
   display: flex;
-  align-items: center;
-  margin-bottom: 24px; }
+  align-items: center; }
   .metadata .since::before {
     display: inline-block;
     vertical-align: middle;
@@ -100,13 +99,17 @@ header {
   color: #6B7785;
   font-size: 14px;
   line-height: 1.5em;
-  margin-bottom: 24px; }
+  margin: 24px 0; }
+  .caption.no-indicator::after {
+    display: none; }
   .caption.collapsed .ellipses {
     display: initial; }
   .caption.collapsed .hidden {
     display: none; }
   .caption.collapsed::after {
     content: "Read More"; }
+  .caption:empty {
+    display: none; }
   .caption::after {
     font-size: 12px;
     font-weight: 500;

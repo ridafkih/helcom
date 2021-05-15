@@ -69,6 +69,20 @@ class ContentManager {
   _input = document.getElementById("contentInput");
 
   constructor() {
+		this._input.addEventListener("paste", (ev) => {
+			ev.preventDefault();
+			let text = "";
+			if (ev.clipboardData) {
+				text = ev.clipboardData.getData("text/plain");
+			} else if (window.clipboardData) {
+				text = window.clipboardData.getData("Text");
+			}
+
+			const insertTextSupported = document.queryCommandSupported("insertText");
+			const command = insertTextSupported ? "insertText" : "paste";
+			document.execCommand(command, false, text);
+		});
+
     this._input.addEventListener("input", (ev) => {
       this.setCaption(ev.target.textContent);
     });
