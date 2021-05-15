@@ -133,8 +133,10 @@ class FeedPost {
   importFromNode = (node) => {
 		const { posted } = node.dataset;
 
-    this.images = Array.from(node.querySelectorAll(".cover-container img"));
-    this.posted = new Date(parseInt(posted));
+    this.images = Array.from(node.querySelectorAll(".cover-container img")).map(
+      ({ src }) => src
+    );
+		this.posted = new Date(parseInt(posted));
 
 		const captionElement = node.querySelector(".caption");
     this.caption = captionElement.textContent;
