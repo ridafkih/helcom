@@ -64,25 +64,29 @@ class ErrorManager {
 }
 
 class ContentManager {
-	caption = "";
-	captionPreview = document.querySelector('.post-preview .caption');
-	_input = document.getElementById("contentInput");
+  caption = "";
+  captionPreview = document.querySelector(".post-preview .caption");
+  _input = document.getElementById("contentInput");
 
-	constructor() {
-		this._input.addEventListener("input", (ev) => {
-			this.setCaption(ev.target.textContent);
-		})
+  constructor() {
+    this._input.addEventListener("input", (ev) => {
+      this.setCaption(ev.target.textContent);
+    });
+  }
+
+  setCaption(text = "") {
+    this.captionPreview.textContent = text;
+    this.caption = text;
+  }
+
+	publish() {
+		this.reset();
 	}
 
-	setCaption(text = "") {
-		this.captionPreview.textContent = text;
-		this.caption = text;
-	}
-
-	reset() {
-		this._input.textContent = "";
-		this.setCaption();
-	}
+  reset() {
+    this._input.textContent = "";
+    this.setCaption();
+  }
 }
 
 const error = new ErrorManager();
@@ -108,9 +112,7 @@ events.forEach(({ event, element, res }) => {
 
 // Post Preview Drag Logic
 
-let startPosition;
-let touchHistory = [];
-
+let startPosition, touchHistory = [];
 const previewModal = document.getElementById("previewPost");
 
 previewModal.addEventListener(
@@ -144,8 +146,7 @@ previewModal.addEventListener("touchend", () => {
   const threshold = 15;
 
   let delay = 320;
-  let targetPosition;
-  let completionTask;
+  let targetPosition, completionTask;
 
   if (momentum > threshold) {
     targetPosition = "100vh";
@@ -153,12 +154,12 @@ previewModal.addEventListener("touchend", () => {
   } else if (momentum < -threshold) {
     targetPosition = "-100vh";
     completionTask = () => {
-      publish();
+      content.publish();
       modals.close();
     };
   } else {
-    delay = 0;
     targetPosition = "0";
+    delay = 0;
   }
 
   previewModal.classList.remove("dragging");
@@ -166,17 +167,11 @@ previewModal.addEventListener("touchend", () => {
 
   setTimeout(() => {
     previewModal.style.transform = `translateY(0)`;
-    if (completionTask)
-			completionTask();
+    if (completionTask) completionTask();
   }, delay);
 
   touchHistory = [];
 });
-
-function publish() {
-  console.log("Publish Complete!");
-	content.reset();
-}
 
 function calculateMomentum(history = touchHistory) {
   const momentum =
@@ -187,4 +182,80 @@ function calculateMomentum(history = touchHistory) {
       .slice(1)
       .reduce((a, b) => a + b, 0) / history.length;
   return momentum || 0;
+}
+
+class FeedPost {	
+	constructor() {
+		this.images = [];
+		this.posted = new Date();
+		this.caption = "";
+
+		this.reactions = {
+			likes: 0,
+			comments: 0,
+			shares: 0,
+		}
+	}
+
+	/**
+	 * Return the caption node with resizing.
+	 * @param {number} cutoff - The text limit.
+	 * @returns {HTMLDivElement} - The caption node. 
+	 */
+	parseCaption(cutoff = 240) {
+		const paragraph = createElement("p", null, "caption");
+		
+		const head = this.caption.substr(0, cutoff),
+					tail = this.caption.substr(cutoff);
+
+		const preview = createElement("span", head, "preview");
+		paragraph.appendChild(preview);
+
+		if (tail) {
+			const ellipses = createElement("span", "...", "ellipses"),
+						hidden = createElement("span", tail, "preview");
+			paragraph.append(ellipses, hidden);
+		}
+
+		return paragraph;
+	}
+
+	/**
+	 * Import FeedPost data from a node.
+	 * @param {HTMLElement} node - The node element. 
+	 */
+	importFromNode(node) {
+		this.images = Array.from(node.querySelectorAll('.cover-container img'));
+		this.posted = new Date(node.dataset.posted);
+		this.caption = node.querySelector('.caption').textContent;
+
+		this.reactions = getActionsCount(node);
+	}
+}
+
+/**
+ * 
+ * @param {string} tag - The HTML tag.
+ * @param {string} textContent - Text content of the node.
+ * @param  {...string} classNames - Spread classList.
+ * @returns {HTMLElement} - The HTML Element.
+ */
+function createElement(tag, textContent, ...classNames) {
+	const element = document.createElement(tag);
+	element.classList.add(classNames);
+	if (textContent)
+		element.textContent = textContent;
+	return element;
+}
+
+function getActionsCount(parentNode) {
+	const likes = parseInt(getActionCount(parentNode, "like")) || 0,
+				comments = parseInt(getActionCount(parentNode, "comment")) || 0;
+				shares = parseInt(getActionCount(parentNode, "share")) || 0;
+
+	return { likes, comments, shares };
+}
+
+function getActionCount(node, className) {
+	return node.querySelector(`.action.${className}`).dataset.count;
 }
