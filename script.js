@@ -116,26 +116,44 @@ previewModal.addEventListener(
   { passive: true }
 );
 
-previewModal.addEventListener("touchend", (ev) => {
-	const momentum = calculateMomentum(touchHistory);
-	const threshold = 15;
+previewModal.addEventListener("touchend", () => {
+  const momentum = calculateMomentum(touchHistory);
+  const threshold = 15;
 
-	let targetPosition;	
-	if (momentum > threshold) {
-		targetPosition = "100vh";
-	} else if (momentum < -threshold) {
-		targetPosition = "-100vh";
-	} else {
-		targetPosition = "0";
-	}
-	
-	previewModal.style.transform = `translateY(${targetPosition})`;
+  let delay = 320;
+  let targetPosition;
+  let completionTask;
+
+  if (momentum > threshold) {
+    targetPosition = "100vh";
+    completionTask = () => modals.activate("createPost");
+  } else if (momentum < -threshold) {
+    targetPosition = "-100vh";
+    completionTask = () => {
+      publish();
+      modals.close();
+    };
+  } else {
+    delay = 0;
+    targetPosition = "0";
+  }
+
   previewModal.classList.remove("dragging");
+  previewModal.style.transform = `translateY(${targetPosition})`;
+  setTimeout(() => {
+    completionTask();
+    previewModal.style.transform = `translateY(0)`;
+  }, delay);
+
   touchHistory = [];
 });
 
+function publish() {
+  console.log("Publish Complete!");
+}
+
 function calculateMomentum(history = touchHistory) {
-  const momentum = 
+  const momentum =
     history
       .map((delta, index) => {
         return delta - history[index - 1];
