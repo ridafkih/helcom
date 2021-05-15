@@ -106,9 +106,11 @@ header {
   .caption.collapsed .hidden {
     display: none; }
   .caption.collapsed::after {
+    content: "Read More"; }
+  .caption::after {
     font-size: 12px;
     font-weight: 500;
-    content: "Read More";
+    content: "Read Less";
     color: #4F94EB; }
 
 .actions {

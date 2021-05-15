@@ -159,13 +159,17 @@ header {
       display: none;
     }
 
-    &::after {
-      font-size: 12px;
-      font-weight: 500;
-  
+    &::after {  
       content: "Read More";
-      color: $accent-color;
     }
+  }
+
+  &::after {
+    font-size: 12px;
+    font-weight: 500;
+
+    content: "Read Less";
+    color: $accent-color;
   }
 }
 
