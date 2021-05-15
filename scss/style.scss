@@ -314,6 +314,11 @@ header {
 
 #previewPost {
   padding: 12px 8px;
+  transition: 0.32s ease;
+
+  &.dragging {
+    transition: none;
+  }
 }
 
 .post-preview {

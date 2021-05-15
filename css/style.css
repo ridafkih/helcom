@@ -211,7 +211,10 @@ header {
   outline: none; }
 
 #previewPost {
-  padding: 12px 8px; }
+  padding: 12px 8px;
+  transition: 0.32s ease; }
+  #previewPost.dragging {
+    transition: none; }
 
 .post-preview .cover-container {
   border-radius: 16px; }

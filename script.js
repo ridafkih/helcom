@@ -86,6 +86,7 @@ const previewModal = document.getElementById("previewPost");
 previewModal.addEventListener(
   "touchstart",
   (ev) => {
+		previewModal.classList.add("dragging");
     const [{ clientY }] = ev.touches;
     startPosition = clientY;
   },
@@ -103,7 +104,8 @@ previewModal.addEventListener(
 );
 
 previewModal.addEventListener("touchend", () => {
-  previewModal.style.transform = "translateY(0)";
+	previewModal.classList.remove("dragging");
+	previewModal.style.transform = "translateY(0)";
 });
 
 const error = new ErrorManager();
