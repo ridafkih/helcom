@@ -148,15 +148,24 @@ header {
   line-height: 1.5em;
   margin: 24px 0;
 
-  &.no-indicator::after {
-    display: none;
+  .ellipses {
+    margin-right: 4px;
+  }
+
+  &:not(.collapsable) {
+    &::after,
+    .ellipses {
+      display: none;
+    }
+  }
+
+  &:not(.collapsed) {
+    .ellipses {
+      display: none;
+    }
   }
 
   &.collapsed {
-    .ellipses {
-      display: initial;
-    }
-
     .hidden {
       display: none;
     }

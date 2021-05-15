@@ -60,6 +60,7 @@ export default class PostModule extends HTMLElement {
 			"p", 
 			null, 
 			"caption",
+			collapsable ? "collapsable" : "",
 			collapsable ? "collapsed" : ""
 		);
 

@@ -100,10 +100,13 @@ header {
   font-size: 14px;
   line-height: 1.5em;
   margin: 24px 0; }
-  .caption.no-indicator::after {
+  .caption .ellipses {
+    margin-right: 4px; }
+  .caption:not(.collapsable)::after,
+  .caption:not(.collapsable) .ellipses {
     display: none; }
-  .caption.collapsed .ellipses {
-    display: initial; }
+  .caption:not(.collapsed) .ellipses {
+    display: none; }
   .caption.collapsed .hidden {
     display: none; }
   .caption.collapsed::after {
