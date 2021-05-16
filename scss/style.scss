@@ -328,14 +328,45 @@ post-element {
   color: $love-red;
   
   .action-button {
+    position: relative;
     background: $love-red;
     color: white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 50%;
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      animation: pulse 0.5s ease forwards;
+    }
 
     object {
       filter: brightness(3);
     }
   }
 }
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  99% {
+    opacity: 0;
+    transform: scale(2);
+  }
+  100% {
+    display: none;
+  }
+}
+
 
 // Upload Button
 
@@ -514,6 +545,7 @@ post-element {
 
 .post-preview {
   .cover-container {
+    max-height: 400px;
     border-radius: 16px;
   }
 
