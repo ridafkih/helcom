@@ -21,7 +21,6 @@ export default class PostModule extends HTMLElement {
     shares: 0,
   };
 
-  domElement;
   _nodeImport;
 
   _dateInterval;
@@ -153,11 +152,12 @@ export default class PostModule extends HTMLElement {
    * @returns {HTMLDivElement} - The caption node.
    */
   parseCaption = (cutoff = 240) => {
-    if (!this.caption) {
-      this.caption = this.querySelector(".caption").textContent;
+    const captionElement = this.querySelector(".caption");
+
+    if (!this.caption && captionElement) {
+      this.caption = captionElement.textContent;
     }
 
-    const captionElement = this.querySelector(".caption");
     const collapsable = this.caption.length > cutoff;
 
     const paragraph = createElement(

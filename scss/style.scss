@@ -129,6 +129,7 @@ post-element {
 .metadata {
   font-size: 12px;
   color: $quinary-text-color;
+  margin-bottom: 24px;
 
   display: flex;
   align-items: center;
@@ -154,7 +155,7 @@ post-element {
   color: $tertiary-text-color;
   font-size: 14px;
   line-height: 1.5em;
-  margin: 24px 0;
+  margin-bottom: 24px;
 
   .ellipses {
     margin-right: 4px;
