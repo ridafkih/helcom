@@ -81,12 +81,15 @@ post-element {
   position: relative;
   display: flex;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
   border-radius: inherit; }
   .cover-container img {
     min-height: 50px;
     max-height: 450px;
     min-width: 100%;
-    object-fit: cover; }
+    object-fit: cover;
+    scroll-snap-align: start;
+    scroll-snap-stop: always; }
 
 .post-content {
   padding: 16px; }

@@ -113,6 +113,7 @@ post-element {
   position: relative;
   display: flex;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
   border-radius: inherit;
   
   img {
@@ -121,6 +122,9 @@ post-element {
 
     min-width: 100%;
     object-fit: cover;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 
