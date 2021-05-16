@@ -91,6 +91,18 @@ export default class ContentService {
   registerSwipeEvents() {
     let startPosition, touchHistory = [];
     const previewModal = document.querySelector("#previewPost");
+    const imageContainer = previewModal.querySelector(".cover-container");
+
+    let swipeDisabled = false;
+    let swipeTimeout;
+
+    imageContainer.addEventListener("scroll", () => {
+      swipeDisabled = true; 
+      clearTimeout(swipeTimeout);
+      swipeTimeout = setTimeout(() => {
+        swipeDisabled = false;
+      }, 200);
+    })
 
     previewModal.addEventListener(
       "touchstart",
@@ -109,7 +121,8 @@ export default class ContentService {
     previewModal.addEventListener(
       "touchmove",
       (ev) => {
-        if (targetIsOverflowingCaption(ev)) return;
+        console.log(swipeDisabled);
+        if (targetIsOverflowingCaption(ev) || swipeDisabled) return;
 
         const [{ clientY }] = ev.touches;
         const delta = clientY - startPosition;
@@ -156,8 +169,9 @@ export default class ContentService {
   }
 
   setCaption(text = "") {
-    this.captionPreview.innerText = text;
-    this.caption = text;
+    const trimmed = text.trim();
+    this.captionPreview.innerText = trimmed;
+    this.caption = trimmed;
   }
 
   /**
