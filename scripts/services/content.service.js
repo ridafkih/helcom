@@ -40,25 +40,37 @@ export default class ContentService {
    * @param {Function} callback - Callback function that takes list of files as parameter.
    */
   registerFileUpload() {
-    const label = document.querySelector("label.attach");
-    const container = document.querySelector(".attachments-container");
+    const _this = this;
     const node = document.querySelector("input[type=\"file\"]");
     node.addEventListener("change", function () {
       const { files } = this;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (!file.type.startsWith("image/")) continue;
-
-        const imageContainer = createElement("div", null, "attachment");
-        const image = createElement("img");
-        image.src = URL.createObjectURL(file);
-        imageContainer.appendChild(image)
-
-        container.insertBefore(imageContainer, label);
+        _this.upload(file);
       }
     }, false);
   }
 
+  /**
+   * Upload and preview a file.
+   * @param {File} file - The file to be uploaded.
+   */
+  upload(file) {
+    const label = document.querySelector("label.attach");
+    const container = document.querySelector(".attachments-container");
+
+    const imageContainer = createElement("div", null, "attachment");
+    const image = createElement("img");
+    image.src = URL.createObjectURL(file);
+    imageContainer.appendChild(image);
+
+    container.insertBefore(imageContainer, label);
+  }
+
+  /**
+   * Register the swipe events for the preview modal
+   */
   registerSwipeEvents() {
     let startPosition,
       touchHistory = [];
