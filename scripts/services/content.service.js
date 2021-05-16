@@ -98,6 +98,7 @@ export default class ContentService {
     const previewModal = document.querySelector("#previewPost");
     const imageContainer = previewModal.querySelector(".cover-container");
 
+    let lastClientY = 0;
     let dragging = false;
 
     let dragDisabled = false;
@@ -113,6 +114,8 @@ export default class ContentService {
 
     const handleTouchStart = (ev) => {
       if (targetIsOverflowingCaption(ev)) return;
+      lastClientY = 0;
+
       dragging = true;
 
       previewModal.classList.add("dragging");
@@ -133,9 +136,11 @@ export default class ContentService {
 
       if (ev.touches) {
         const [{ clientY }] = ev.touches;
+        lastClientY = clientY;
         delta = clientY - startPosition;
       } else {
         const { clientY } = ev;
+        lastClientY = clientY;
         delta = clientY - startPosition;
       }
 
@@ -144,7 +149,7 @@ export default class ContentService {
       previewModal.style.transform = `translateY(${delta}px)`;
     };
 
-    const handleTouchEnd = (ev) => {
+    const handleTouchEnd = () => {
       dragging = false;
 
       const momentum = calculateMomentum(touchHistory);
@@ -153,10 +158,14 @@ export default class ContentService {
       let delay = 320;
       let targetPosition, completionTask;
 
-      if (momentum > threshold) {
+      const distanceFromEquator = !lastClientY ? 0 : lastClientY - (window.innerHeight / 2);
+      const inTopQuarter = distanceFromEquator > window.innerHeight / 4;
+      const inBottomQuarter = distanceFromEquator < window.innerHeight / -4;
+
+      if (momentum > threshold || inTopQuarter) {
         targetPosition = "100vh";
         completionTask = () => this._modalManager.activate("createPost");
-      } else if (momentum < -threshold) {
+      } else if (momentum < -threshold || inBottomQuarter) {
         targetPosition = "-100vh";
         completionTask = () => {
           this.publish();
