@@ -175,7 +175,7 @@ export default class ContentService {
 
     previewModal.addEventListener("touchstart", handleTouchStart, { passive: true });
     previewModal.addEventListener("touchmove", handleTouchMove, { passive: true });
-    previewModal.addEventListener("touchend", () => handleTouchEnd);
+    previewModal.addEventListener("touchend", handleTouchEnd);
 
     previewModal.addEventListener("mousedown", handleTouchStart);
     previewModal.addEventListener("mousemove", handleTouchMove);
