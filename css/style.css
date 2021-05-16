@@ -3,6 +3,9 @@ button {
   border: none;
   font-family: inherit; }
 
+label {
+  box-sizing: border-box; }
+
 * {
   padding: 0;
   margin: 0; }
@@ -264,13 +267,21 @@ post-element {
   padding-bottom: 12px; }
   .attachments-container .attachment,
   .attachments-container .attach {
+    min-width: 88px;
     width: 88px;
     height: 88px;
     border-radius: 16px; }
   .attachments-container .attachment {
+    overflow: hidden;
     background: #161A1F; }
+    .attachments-container .attachment img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%; }
   .attachments-container .attach {
     background: transparent;
     border: 2px dashed #6B7785; }
     .attachments-container .attach input[type="file"] {
-      display: none; }
+      display: none;
+      box-sizing: border-box; }

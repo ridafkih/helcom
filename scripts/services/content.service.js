@@ -1,4 +1,5 @@
 import PostModule from "../modules/post.module.js";
+import { createElement } from "./dom.service.js";
 
 /**
  * Content Management Service
@@ -32,6 +33,30 @@ export default class ContentService {
     this._input.addEventListener("input", (ev) => {
       this.setCaption(ev.target.textContent);
     });
+  }
+
+  /**
+   * Activate file uploading for a file input element.
+   * @param {Function} callback - Callback function that takes list of files as parameter.
+   */
+  registerFileUpload() {
+    const label = document.querySelector("label.attach");
+    const container = document.querySelector(".attachments-container");
+    const node = document.querySelector("input[type=\"file\"]");
+    node.addEventListener("change", function () {
+      const { files } = this;
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith("image/")) continue;
+
+        const imageContainer = createElement("div", null, "attachment");
+        const image = createElement("img");
+        image.src = URL.createObjectURL(file);
+        imageContainer.appendChild(image)
+
+        container.insertBefore(imageContainer, label);
+      }
+    }, false);
   }
 
   registerSwipeEvents() {

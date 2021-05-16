@@ -8,6 +8,7 @@ customElements.define('post-element', PostModule);
 const modals = new ModalService().register();
 const content = new ContentService(modals);
 content.registerSwipeEvents();
+content.registerFileUpload();
 
 registerTimelinePosts();
 
