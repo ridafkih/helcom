@@ -6,6 +6,13 @@
   @return rgba($hex, $opacity)
 }
 
+@mixin flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 html,
 body {
   width: 100%;
@@ -29,6 +36,10 @@ body {
   &.no-overflow {
     overflow: hidden;
   }
+}
+
+object {
+  pointer-events: none;
 }
 
 header {
@@ -248,6 +259,8 @@ post-element {
     }
   
     .action-button {
+      @include flex-center;
+
       width: 42px;
       height: 42px;
   
@@ -272,12 +285,18 @@ post-element {
   .action-button {
     background: $love-red;
     color: white;
+
+    object {
+      filter: brightness(3);
+    }
   }
 }
 
 // Upload Button
 
 #upload {
+  @include flex-center;
+  
   position: fixed;
   bottom: 24px;
   left: 0;

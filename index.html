@@ -100,7 +100,9 @@
         </div>
       </post-element>
     </main>
-    <button id="upload"></button>
+    <button id="upload">
+      <object data="./public/svgs/new-post.svg" type="image/svg+xml"></object>
+    </button>
     <!-- Post Template -->
     <template id="postTemplate">
       <div class="author">
@@ -122,13 +124,19 @@
           <div class="caption"></div>
           <div class="actions">
             <div class="action likes" data-count="0">
-              <button class="action-button"></button>
+              <button class="action-button">
+                <object data="./public/svgs/heart.svg" type="image/svg+xml"></object>
+              </button>
             </div>
             <div class="action comments" data-count="0">
-              <button class="action-button"></button>
+              <button class="action-button">
+                <object data="./public/svgs/chat-bubble.svg" type="image/svg+xml"></object>
+              </button>
             </div>
             <div class="action shares" data-count="0">
-              <button class="action-button"></button>
+              <button class="action-button">
+                <object data="./public/svgs/paper-plane.svg" type="image/svg+xml"></object>
+              </button>
             </div>
           </div>
         </div>

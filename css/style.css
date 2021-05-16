@@ -26,6 +26,9 @@ body {
   body.no-overflow {
     overflow: hidden; }
 
+object {
+  pointer-events: none; }
+
 header {
   height: 88px;
   width: 100%;
@@ -161,6 +164,10 @@ post-element {
     .actions .action:last-child {
       margin-left: auto; }
     .actions .action .action-button {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       width: 42px;
       height: 42px;
       border-radius: 50%;
@@ -177,8 +184,14 @@ post-element {
   .likes.liked .action-button {
     background: #EC6363;
     color: white; }
+    .likes.liked .action-button object {
+      filter: brightness(3); }
 
 #upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 24px;
   left: 0;
