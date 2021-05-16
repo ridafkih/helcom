@@ -219,6 +219,7 @@ export function populateImageCarousel(container, urls) {
 
   const parent = container.parentElement;
   const indicatorContainer = parent.querySelector(".image-count");
+  Array.from(indicatorContainer.children).forEach(element => element.remove());
 
   const indicators = [];
 
