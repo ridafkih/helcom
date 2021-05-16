@@ -33,7 +33,7 @@ export default class ContentService {
     });
 
     this._input.addEventListener("input", (ev) => {
-      this.setCaption(ev.target.textContent);
+      this.setCaption(ev.target.innerText);
     });
   }
 
@@ -93,6 +93,8 @@ export default class ContentService {
     previewModal.addEventListener(
       "touchstart",
       (ev) => {
+        if (targetIsOverflowingCaption(ev)) return;
+
         previewModal.classList.add("dragging");
         const [{ clientY }] = ev.touches;
         startPosition = clientY;
@@ -105,6 +107,8 @@ export default class ContentService {
     previewModal.addEventListener(
       "touchmove",
       (ev) => {
+        if (targetIsOverflowingCaption(ev)) return;
+
         const [{ clientY }] = ev.touches;
         const delta = clientY - startPosition;
 
@@ -150,7 +154,7 @@ export default class ContentService {
   }
 
   setCaption(text = "") {
-    this.captionPreview.textContent = text;
+    this.captionPreview.innerText = text;
     this.caption = text;
   }
 
@@ -182,6 +186,10 @@ export default class ContentService {
     this.destroyAttachments();
     this.updatePreviewImages();
   }
+}
+
+function targetIsOverflowingCaption({ target }) {
+  return target.scrollHeight > target.clientHeight;
 }
 
 /**

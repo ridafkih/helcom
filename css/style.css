@@ -113,9 +113,15 @@ post-element {
   color: #6B7785;
   font-size: 14px;
   line-height: 1.5em;
-  margin-bottom: 24px; }
-  .caption .ellipses {
+  margin-bottom: 24px;
+  overflow-y: auto; }
+  .caption .ellipses,
+  .caption .hidden {
     margin-right: 4px; }
+  .caption > * {
+    display: inline; }
+  .caption.collapsable {
+    white-space: pre-wrap; }
   .caption:not(.collapsable)::after,
   .caption:not(.collapsable) .ellipses {
     display: none; }
@@ -242,6 +248,9 @@ post-element {
   padding: 12px 8px;
   transition: 0.32s ease;
   animation-delay: 2s; }
+  #previewPost .caption {
+    max-height: 400px;
+    overflow-y: auto; }
   #previewPost.dragging {
     transition: none; }
   #previewPost::before, #previewPost::after {

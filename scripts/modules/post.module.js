@@ -166,35 +166,45 @@ export default class PostModule extends HTMLElement {
   /**
    * Resizes the caption for easy consuming..
    * @param {number} cutoff - The text limit.
+   * @param {number} newlineLimit - The newline limit.
    * @returns {HTMLDivElement} - The caption node.
    */
-  parseCaption = (cutoff = 240) => {
+  parseCaption = (cutoff = 240, newlineLimit = 6) => {
     const captionElement = this.querySelector(".caption");
 
     if (!this.caption && captionElement) {
-      this.caption = captionElement.textContent;
+      this.caption = captionElement.innerText;
     }
 
-    const collapsable = this.caption.length > cutoff;
+    let [...captionCopy] = this.caption.slice(0).trim();
+
+    const newlineIndices = captionCopy.map((x, i) => {
+      return x === "\n" ? i : undefined;
+    }).filter(Number.isInteger);
+
+    const newlineCutoff = newlineIndices[newlineLimit];
+    if (newlineCutoff > newlineLimit) cutoff = newlineCutoff;
+    
+    const collapsable = this.caption.length > cutoff || newlineCutoff > newlineLimit;
 
     const paragraph = createElement(
-      "p",
+      "div",
       null,
       "caption",
       collapsable ? "collapsable" : "",
       collapsable ? "collapsed" : ""
     );
 
-    const head = this.caption.substr(0, cutoff);
-    const tail = this.caption.substr(cutoff);
+    const head = captionCopy.splice(0, cutoff).join``;
+    const tail = captionCopy.join``;
 
     if (collapsable) {
-      const preview = createElement("span", head, "preview");
-      const ellipses = createElement("span", "...", "ellipses");
-      const hidden = createElement("span", tail, "hidden");
+      const preview = createElement("p", head, "preview");
+      const ellipses = createElement("p", "...", "ellipses");
+      const hidden = createElement("p", tail, "hidden");
       paragraph.append(preview, ellipses, hidden);
     } else {
-      paragraph.textContent = this.caption;
+      paragraph.innerText = this.caption;
     }
 
     if (captionElement) captionElement.replaceWith(paragraph);

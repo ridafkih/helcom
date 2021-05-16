@@ -162,9 +162,19 @@ post-element {
   font-size: 14px;
   line-height: 1.5em;
   margin-bottom: 24px;
+  overflow-y: auto;
 
-  .ellipses {
+  .ellipses,
+  .hidden {
     margin-right: 4px;
+  }
+
+  & > * {
+    display: inline;
+  }
+
+  &.collapsable {
+    white-space: pre-wrap;
   }
 
   &:not(.collapsable) {
@@ -363,6 +373,11 @@ post-element {
   transition: 0.32s ease;
 
   animation-delay: 2s;
+
+  .caption {
+    max-height: 400px;
+    overflow-y: auto;
+  }
 
   &.dragging {
     transition: none;
