@@ -51,6 +51,7 @@ export default class ContentService {
         if (!file.type.startsWith("image/")) continue;
         _this.upload(file);
       }
+      _this.updatePreviewImages();
       node.value = "";
     }, false);
   }
@@ -59,7 +60,7 @@ export default class ContentService {
    * Upload and preview a file.
    * @param {File} file - The file to be uploaded.
    */
-  upload( file) {
+  upload(file) {
     const label = document.querySelector("label.attach");
     const container = document.querySelector(".attachments-container");
 
@@ -71,6 +72,15 @@ export default class ContentService {
     this.images.push(image.src);
 
     container.insertBefore(imageContainer, label);
+  }
+
+  /**
+   * Update the preview images of the
+   * preview modal.
+   */
+  updatePreviewImages() {
+    const container = document.querySelector('.cover-container');
+    populateImageCarousel(container, this.images);
   }
 
   /**
@@ -170,7 +180,24 @@ export default class ContentService {
     this._input.textContent = "";
     this.setCaption();
     this.destroyAttachments();
+    this.updatePreviewImages();
   }
+}
+
+/**
+ * Populate an image carousel with images.
+ * @param {HTMLElement} container - The container for the carousel.
+ * @param {string[]} urls - The urls of the images.
+ */
+export function populateImageCarousel(container, urls) {
+  while (container.children.length) {
+    container.removeChild(container.firstChild);
+  }
+  urls.forEach(url => {
+    const image = createElement("img", null, "cover");
+    image.src = url;
+    container.appendChild(image);
+  });
 }
 
 export function registerTimelinePosts() {

@@ -116,12 +116,11 @@ post-element {
   border-radius: inherit;
   
   img {
-    min-height: 250px;
+    min-height: 50px;
     max-height: 450px;
 
     min-width: 100%;
     object-fit: cover;
-    border-radius: inherit;
   }
 }
 

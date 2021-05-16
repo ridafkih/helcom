@@ -1,3 +1,4 @@
+import { populateImageCarousel } from "../services/content.service.js";
 import { createElement } from "../services/dom.service.js";
 
 const template = document.querySelector("#postTemplate");
@@ -98,15 +99,9 @@ export default class PostModule extends HTMLElement {
    */
   setImages(urls = []) {
     if (urls.length > 0) this.images = urls;
-    console.log(this.images);
-
     const container = this.querySelector(".cover-container");
     if (!container) return this;
-    this.images.forEach(url => {
-      const image = createElement("img", null, "cover");
-      image.src = url;
-      container.appendChild(image);
-    });
+    populateImageCarousel(container, this.images);
     return this;
   }
 

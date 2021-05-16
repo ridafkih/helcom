@@ -83,11 +83,10 @@ post-element {
   overflow-x: auto;
   border-radius: inherit; }
   .cover-container img {
-    min-height: 250px;
+    min-height: 50px;
     max-height: 450px;
     min-width: 100%;
-    object-fit: cover;
-    border-radius: inherit; }
+    object-fit: cover; }
 
 .post-content {
   padding: 16px; }
