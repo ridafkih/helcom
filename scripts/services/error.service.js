@@ -14,6 +14,6 @@ export default class ErrorService {
    * @param {string} message - The message to display in the console & for the user.
    */
   display(message) {
-    // ...
+    // ... hi helcim! this is where I would usually put an error handler
   }
 }

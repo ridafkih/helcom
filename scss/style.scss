@@ -231,39 +231,42 @@ post-element {
 
 .actions {
   display: flex;
-  gap: 8px;
+
+  .action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    color: $quinary-text-color;
+
+    &:first-child {
+      margin-right: 6px;
+    }
+  
+    &:last-child {
+      margin-left: auto;
+    }
+  
+    .action-button {
+      width: 42px;
+      height: 42px;
+  
+      border-radius: 50%;
+  
+      background: $primary-color;
+    }
+  
+    &::after {
+      content: attr(data-count);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 8px;
+      text-align: center;
+    }
+  }
 }
 
-.action {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  color: $quinary-text-color;
-
-  &:last-child {
-    margin-left: auto;
-  }
-
-  .action-button {
-    width: 42px;
-    height: 42px;
-
-    border-radius: 50%;
-
-    background: $primary-color;
-  }
-
-  &::after {
-    content: attr(data-count);
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 8px;
-    text-align: center;
-  }
-}
-
-.action.likes.liked {
+.likes.liked {
   color: $love-red;
   
   .action-button {
@@ -334,6 +337,9 @@ post-element {
   }
 
   .modal-button {
+    transition: 0.16s ease;
+    transform: scale(1);
+    
     width: 100%;
     padding: 16px;
     
@@ -342,6 +348,12 @@ post-element {
 
     color: white;
     background: $accent-color;
+
+    &:disabled {
+      transform: scale(0.96);
+      background: $primary-color;
+      color: $quinary-text-color;
+    }
   }
 }
 

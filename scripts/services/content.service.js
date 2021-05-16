@@ -34,6 +34,7 @@ export default class ContentService {
 
     this._input.addEventListener("input", (ev) => {
       this.setCaption(ev.target.innerText);
+      this.updatePreviewButton();
     });
   }
 
@@ -72,6 +73,7 @@ export default class ContentService {
     this.images.push(image.src);
 
     container.insertBefore(imageContainer, label);
+    this.updatePreviewButton();
   }
 
   /**
@@ -168,6 +170,14 @@ export default class ContentService {
     this.images = [];
   }
 
+  /**
+   * Enables & disables the preview button depending on preview content.
+   */
+  updatePreviewButton() {
+    const button = document.querySelector("#preview");
+    button.disabled = this.images.length === 0 && this.caption.trim().length === 0;
+  }
+
   publish() {
     const post = new PostModule()
       .setAuthor("Helcim Team", "@helcim")
@@ -186,6 +196,7 @@ export default class ContentService {
     this.setCaption();
     this.destroyAttachments();
     this.updatePreviewImages();
+    this.updatePreviewButton();
   }
 }
 

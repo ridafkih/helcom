@@ -150,31 +150,31 @@ post-element {
     color: #4F94EB; }
 
 .actions {
-  display: flex;
-  gap: 8px; }
+  display: flex; }
+  .actions .action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #48515B; }
+    .actions .action:first-child {
+      margin-right: 6px; }
+    .actions .action:last-child {
+      margin-left: auto; }
+    .actions .action .action-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #161A1F; }
+    .actions .action::after {
+      content: attr(data-count);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 8px;
+      text-align: center; }
 
-.action {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #48515B; }
-  .action:last-child {
-    margin-left: auto; }
-  .action .action-button {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #161A1F; }
-  .action::after {
-    content: attr(data-count);
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 8px;
-    text-align: center; }
-
-.action.likes.liked {
+.likes.liked {
   color: #EC6363; }
-  .action.likes.liked .action-button {
+  .likes.liked .action-button {
     background: #EC6363;
     color: white; }
 
@@ -219,12 +219,18 @@ post-element {
   .modal.modal-active {
     display: block; }
   .modal .modal-button {
+    transition: 0.16s ease;
+    transform: scale(1);
     width: 100%;
     padding: 16px;
     margin-top: 16px;
     border-radius: 8px;
     color: white;
     background: #4F94EB; }
+    .modal .modal-button:disabled {
+      transform: scale(0.96);
+      background: #161A1F;
+      color: #48515B; }
 
 .modal-header {
   display: flex;
