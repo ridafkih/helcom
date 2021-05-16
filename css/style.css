@@ -63,6 +63,11 @@ header {
     font-size: 10px;
     color: #6B7785; }
 
+post-element {
+  display: none; }
+  post-element.populated {
+    display: initial; }
+
 .post {
   border-radius: 4px 24px 24px 24px;
   padding: 8px;
@@ -142,9 +147,9 @@ header {
     margin-top: 8px;
     text-align: center; }
 
-.action.like:active {
+.action.likes:active {
   color: #EC6363; }
-  .action.like:active .action-button {
+  .action.likes:active .action-button {
     background: #EC6363;
     color: white; }
 

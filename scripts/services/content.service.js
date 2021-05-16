@@ -104,7 +104,12 @@ export default class ContentService {
   }
 
   publish() {
-    const post = new PostModule();
+    const post = new PostModule()
+      .setAuthor("Helcim Team", "@helcim")
+      .setDate()
+      .setCaption(this.caption);
+
+    post.bindToTimeline();
 
     this.reset();
   }
@@ -113,6 +118,11 @@ export default class ContentService {
     this._input.textContent = "";
     this.setCaption();
   }
+}
+
+export function registerTimelinePosts() {
+  const posts = Array.from(document.querySelectorAll('post-element'));
+  posts.forEach(new PostModule().importFromNode);
 }
 
 function calculateMomentum(history = touchHistory) {

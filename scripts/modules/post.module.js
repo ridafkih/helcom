@@ -24,6 +24,8 @@ export default class PostModule extends HTMLElement {
   domElement;
   _nodeImport;
 
+  _dateInterval;
+
   /**
    * @param {HTMLElement} nodeImport
    * 	- The pre-existing dom element to register
@@ -50,6 +52,9 @@ export default class PostModule extends HTMLElement {
     this.setCaption();
     this.setDate();
     this.setReactions();
+    this.registerCaption();
+
+    this.classList.add("populated");
 
     return this;
   }
@@ -68,7 +73,6 @@ export default class PostModule extends HTMLElement {
     const handleElement = this.querySelector(".handle");
 
     if (fullNameElement) fullNameElement.textContent = fullName;
-
     if (handleElement) handleElement.textContent = handle;
 
     return this;
@@ -90,14 +94,26 @@ export default class PostModule extends HTMLElement {
    * @param {Date} date - The target date.
    * @returns {PostModule} - The post module.
    */
-  setDate(date = new Date()) {
-    const postElement = this.querySelector('.post');
-    this.posted = date;
-    if (postElement)
-      this.querySelector(".post").dataset.posted = date;
+  setDate = (date = new Date()) => {
+    const dateElement = this.querySelector(".date");
+    const sinceElement = this.querySelector(".since");
+
+    const { fullDateString, since } = parseDate(this.posted);
+
+    if (!this.posted) this.posted = date;
+
+    if (dateElement) dateElement.textContent = fullDateString;
+    if (sinceElement) sinceElement.textContent = since;
+
+    if (!this._dateInterval) clearInterval(this._dateInterval);
+
+    this._dateInterval = setInterval(() => {
+      const { since } = parseDate(this.posted);
+      if (sinceElement) sinceElement.textContent = since;
+    }, 1000);
 
     return this;
-  }
+  };
 
   /**
    * Updates the amount of
@@ -109,33 +125,27 @@ export default class PostModule extends HTMLElement {
    * @returns {PostModule} - The post module.
    */
   setReactions = ({ likes, comments, shares } = {}) => {
-    const likeContainer = this.querySelector(".action.like");
-    const commentContainer = this.querySelector(".action.comment");
-    const shareContainer = this.querySelector(".action.share");
-
-    if (likeContainer) {
-      likeContainer.dataset.count = likes || this.reactions.likes;
-      this.reactions.likes = likeContainer.dataset.count;
-    } else {
-      this.reactions.likes = likes || 0;
-    }
-    
-    if (commentContainer) {
-      commentContainer.dataset.count = comments || this.reactions.comments;
-      this.reactions.comments = commentContainer.dataset.count;
-    } else {
-      this.reactions.comments = comments || 0;
-    }
-    
-    if (shareContainer) {
-      shareContainer.dataset.count = shares || this.reactions.shares;
-      this.reactions.shares = shareContainer.dataset.count;
-    } else {
-      this.reactions.shares = shares || 0;
-    }
-
+    this.populateReaction("likes", likes);
+    this.populateReaction("comments", comments);
+    this.populateReaction("shares", shares);
     return this;
   };
+
+  /**
+   * Populate a reaction with a reaction count.
+   * @param {'likes'|'comments'|'shares'} reactionName - The name of the reaction.
+   * @param {number} count - The amount of reactions. 
+   */
+  populateReaction(reactionName, count) {
+    const container = this.querySelector(`.action.${reactionName}`);
+    if (container) {
+      const total = count || this.reactions[reactionName];
+      container.dataset.count = total;
+      this.reactions[reactionName] = total;
+    } else {
+      this.reactions[reactionName] = count || 0;
+    }
+  }
 
   /**
    * Resizes the caption for easy consuming..
@@ -143,11 +153,11 @@ export default class PostModule extends HTMLElement {
    * @returns {HTMLDivElement} - The caption node.
    */
   parseCaption = (cutoff = 240) => {
-    if (!this.caption)
+    if (!this.caption) {
       this.caption = this.querySelector(".caption").textContent;
+    }
 
     const captionElement = this.querySelector(".caption");
-
     const collapsable = this.caption.length > cutoff;
 
     const paragraph = createElement(
@@ -158,13 +168,13 @@ export default class PostModule extends HTMLElement {
       collapsable ? "collapsed" : ""
     );
 
-    const head = this.caption.substr(0, cutoff),
-      tail = this.caption.substr(cutoff);
+    const head = this.caption.substr(0, cutoff);
+    const tail = this.caption.substr(cutoff);
 
     if (collapsable) {
-      const preview = createElement("span", head, "preview"),
-        ellipses = createElement("span", "...", "ellipses"),
-        hidden = createElement("span", tail, "hidden");
+      const preview = createElement("span", head, "preview");
+      const ellipses = createElement("span", "...", "ellipses");
+      const hidden = createElement("span", tail, "hidden");
       paragraph.append(preview, ellipses, hidden);
     } else {
       paragraph.textContent = this.caption;
@@ -188,40 +198,33 @@ export default class PostModule extends HTMLElement {
   };
 
   /**
-   * Import FeedPost data from a node.
+   * Extracts data from node and replaces with a FeedPost class.
    * @param {HTMLElement} node - The node element.
    * @returns {FeedPost} - The resulting feed post.
    */
   importFromNode = (node) => {
-    this.domElement = node;
-
-    const fullName = node.querySelector(".full-name").textContent;
-    const handle = node.querySelector(".handle").textContent;
-
-    this.author.fullName = fullName;
-    this.author.handle = handle;
-
-    const { posted } = node.querySelector(".post").dataset;
-    this.posted = new Date(parseInt(posted));
-
+    this.author.fullName = node.querySelector(".full-name").textContent;
+    this.author.handle = node.querySelector(".handle").textContent;
+    this.posted = new Date(parseInt(node.querySelector(".post").dataset.posted));
     this.images = Array.from(node.querySelectorAll(".cover-container img")).map(
       ({ src }) => src
     );
+    this.caption = node.querySelector(".caption").textContent;
+    this.setReactions({
+      likes: getActionCount(node, "likes") || 0,
+      comments: getActionCount(node, "comments") || 0,
+      shares: getActionCount(node, "shares") || 0,
+    });
 
-    this.registerCaption();
-    this.reactions = this.getActionsCount();
-    
+    node.replaceWith(this);
+    this.populate();
+
     return this;
   };
 
-  getActionsCount() {
-    const likes = parseInt(getActionCount(this.domElement, "like")) || 0;
-    const comments = parseInt(getActionCount(this.domElement, "comment")) || 0;
-    const shares = parseInt(getActionCount(this.domElement, "share")) || 0;
-
-    return { likes, comments, shares };
-  }
-
+  /**
+   * Prepend the active element to the timeline.
+   */
   bindToTimeline() {
     document.querySelector("main").prepend(this);
   }
@@ -231,4 +234,48 @@ function getActionCount(node, className) {
   return node.querySelector(`.action.${className}`).dataset.count;
 }
 
-function parseDate(date = new Date()) {}
+function parseDate(date = new Date()) {
+  const options = { month: "short", day: "numeric", year: "numeric" };
+
+  const now = new Date();
+
+  const time = date.getTime();
+  const fullDateString = date.toLocaleString("en-US", options);
+  const since = parseTimeSince(now.getTime() - time);
+
+  return { time, fullDateString, since };
+}
+
+function parseTimeSince(ms) {
+  let suffix = "";
+  let unit;
+
+  const seconds = (ms - (ms % 1000)) / 1000;
+
+  if (seconds / 3.154e7 >= 1) {
+    suffix = "y";
+    unit = Math.floor(seconds / 3.154e7);
+  } else if (seconds / 2.592e6 >= 1) {
+    suffix = "mo";
+    unit = Math.floor(seconds / 2.592e6);
+  } else if (seconds / 6.048e5 >= 1) {
+    suffix = "w";
+    unit = Math.floor(seconds / 6.048e5);
+  } else if (seconds / 8.64e4 >= 1) {
+    suffix = "d";
+    unit = Math.floor(seconds / 8.64e4);
+  } else if (seconds / 3600 >= 1) {
+    suffix = "h";
+    unit = Math.floor(seconds / 3600);
+  } else if (seconds / 60 >= 1) {
+    suffix = "m";
+    unit = Math.floor(seconds / 60);
+  } else if (seconds <= 10) {
+    return "just now";
+  } else {
+    suffix = "s";
+    unit = seconds;
+  }
+
+  return unit + suffix;
+}

@@ -92,6 +92,14 @@ header {
   }
 }
 
+post-element {
+  display: none;
+
+  &.populated {
+    display: initial;
+  }
+}
+
 .post {
   border-radius: 4px 24px 24px 24px;
   padding: 8px;
@@ -222,7 +230,7 @@ header {
   }
 }
 
-.action.like:active {
+.action.likes:active {
   color: $love-red;
   
   .action-button {
