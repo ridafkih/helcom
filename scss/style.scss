@@ -31,6 +31,7 @@ body {
   padding-bottom: 88px;
 
   font-family: "Inter", sans-serif;
+  touch-action: pan-y;
 
   & > * {
     box-sizing: border-box;
@@ -479,6 +480,14 @@ post-element {
   }
 
   $distanceFromElement: 32px;
+
+  &:hover {
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
 
   &::before,
   &::after {

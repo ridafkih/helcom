@@ -22,7 +22,8 @@ body {
   background: #161A1F;
   color: white;
   padding-bottom: 88px;
-  font-family: "Inter", sans-serif; }
+  font-family: "Inter", sans-serif;
+  touch-action: pan-y; }
   body > * {
     box-sizing: border-box;
     padding: 0 16px; }
@@ -317,6 +318,10 @@ post-element {
     overflow-y: auto; }
   #previewPost.dragging {
     transition: none; }
+  #previewPost:hover {
+    cursor: grab; }
+  #previewPost:active {
+    cursor: grabbing; }
   #previewPost::before, #previewPost::after {
     position: absolute;
     margin: auto;

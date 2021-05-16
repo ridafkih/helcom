@@ -93,49 +93,55 @@ export default class ContentService {
     const previewModal = document.querySelector("#previewPost");
     const imageContainer = previewModal.querySelector(".cover-container");
 
-    let swipeDisabled = false;
-    let swipeTimeout;
+    let dragging = false;
+
+    let dragDisabled = false;
+    let dragTimeout;
 
     imageContainer.addEventListener("scroll", () => {
-      swipeDisabled = true; 
-      clearTimeout(swipeTimeout);
-      swipeTimeout = setTimeout(() => {
-        swipeDisabled = false;
+      dragDisabled = true; 
+      clearTimeout(dragTimeout);
+      dragTimeout = setTimeout(() => {
+        dragDisabled = false;
       }, 200);
     })
+    
+    const handleTouchStart = (ev) => {
+      if (targetIsOverflowingCaption(ev)) return;
+      dragging = true;
 
-    previewModal.addEventListener(
-      "touchstart",
-      (ev) => {
-        if (targetIsOverflowingCaption(ev)) return;
-
-        previewModal.classList.add("dragging");
+      previewModal.classList.add("dragging");
+      if (ev.touches) {
         const [{ clientY }] = ev.touches;
         startPosition = clientY;
+      } else {
+        startPosition = ev.clientY;
+      }
 
-        touchHistory = [];
-      },
-      { passive: true }
-    );
+      touchHistory = [];
+    }
 
-    previewModal.addEventListener(
-      "touchmove",
-      (ev) => {
-        console.log(swipeDisabled);
-        if (targetIsOverflowingCaption(ev) || swipeDisabled) return;
+    const handleTouchMove = (ev) => {
+      if (targetIsOverflowingCaption(ev) || dragDisabled || !dragging) return;
 
+      let delta;
+
+      if (ev.touches) {
         const [{ clientY }] = ev.touches;
-        const delta = clientY - startPosition;
+        delta = clientY - startPosition;
+      } else {
+        const { clientY } = ev;
+        delta = clientY - startPosition;
+      }
+      
+      touchHistory.push(delta);
+      if (touchHistory.length > 10) touchHistory.shift();
+      previewModal.style.transform = `translateY(${delta}px)`;
+    }
 
-        touchHistory.push(delta);
-        if (touchHistory.length > 10) touchHistory.shift();
+    const handleTouchEnd = (ev) => {
+      dragging = false;
 
-        previewModal.style.transform = `translateY(${delta}px)`;
-      },
-      { passive: true }
-    );
-
-    previewModal.addEventListener("touchend", () => {
       const momentum = calculateMomentum(touchHistory);
       const threshold = 15;
 
@@ -165,7 +171,15 @@ export default class ContentService {
       }, delay);
 
       touchHistory = [];
-    });
+    }
+
+    previewModal.addEventListener("touchstart", handleTouchStart, { passive: true });
+    previewModal.addEventListener("touchmove", handleTouchMove, { passive: true });
+    previewModal.addEventListener("touchend", () => handleTouchEnd);
+
+    previewModal.addEventListener("mousedown", handleTouchStart);
+    previewModal.addEventListener("mousemove", handleTouchMove);
+    previewModal.addEventListener("mouseup", handleTouchEnd);
   }
 
   setCaption(text = "") {
