@@ -356,10 +356,25 @@ post-element {
     font-weight: 600; }
   #previewPost::before {
     top: -32px;
-    content: "Swipe Up to Publish"; }
+    content: "Swipe Up to Publish";
+    animation: .6s wiggle ease; }
   #previewPost::after {
     bottom: -32px;
-    content: "Swipe Down to Edit"; }
+    content: "Swipe Down to Edit";
+    animation: 0.6s wiggle ease;
+    animation-delay: .9s; }
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(2deg); }
+  25% {
+    transform: rotate(-2deg); }
+  50% {
+    transform: rotate(2.5deg); }
+  75% {
+    transform: rotate(-4deg); }
+  100% {
+    transform: rotate(0); } }
 
 .post-preview .cover-container {
   max-height: 400px;
