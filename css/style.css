@@ -123,15 +123,33 @@ post-element {
   color: #48515B;
   margin-bottom: 24px;
   display: flex;
+  justify-content: space-between;
   align-items: center; }
-  .metadata .since::before {
-    display: inline-block;
-    vertical-align: middle;
-    content: "";
-    width: 2px;
-    height: 2px;
-    margin: 0 16px;
-    background: #48515B; }
+  .metadata .time-info {
+    display: flex;
+    align-items: center; }
+    .metadata .time-info .since::before {
+      display: inline-block;
+      vertical-align: middle;
+      content: "";
+      width: 2px;
+      height: 2px;
+      margin: 0 16px;
+      background: #48515B; }
+  .metadata .image-count {
+    display: flex;
+    width: 50px; }
+    .metadata .image-count > * + * {
+      margin-left: 4px; }
+    .metadata .image-count .indicator {
+      height: 4px;
+      flex-grow: 1;
+      border-radius: 4px;
+      background: rgba(79, 148, 235, 0.3);
+      transition: 0.12s ease; }
+      .metadata .image-count .indicator.active {
+        flex-grow: 3;
+        background: #4F94EB; }
 
 .caption {
   color: #6B7785;

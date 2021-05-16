@@ -179,22 +179,52 @@ post-element {
   margin-bottom: 24px;
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
-  .since {
-    &::before {
-      display: inline-block;
-      vertical-align: middle;
+  .time-info {
+    display: flex;
+    align-items: center;
 
-      content: "";
+    .since {
+      &::before {
+        display: inline-block;
+        vertical-align: middle;
 
-      width: 2px;
-      height: 2px;
+        content: "";
 
-      margin: 0 16px;
+        width: 2px;
+        height: 2px;
 
-      background: $quinary-text-color;
+        margin: 0 16px;
+
+        background: $quinary-text-color;
+      }
     }
+  }
+
+  .image-count {
+    display: flex;
+    width: 50px;
+
+    & > * + * {
+      margin-left: 4px;
+    }
+
+    .indicator {
+      height: 4px;
+      flex-grow: 1;
+      border-radius: 4px;
+      background: rgba($accent-color, 0.3);
+
+      transition: 0.12s ease;
+      
+      &.active {
+        flex-grow: 3;
+        background: $accent-color;
+      }
+    }
+
   }
 }
 

@@ -216,6 +216,38 @@ export function populateImageCarousel(container, urls) {
   while (container.children.length) {
     container.removeChild(container.firstChild);
   }
+
+  const parent = container.parentElement;
+  const indicatorContainer = parent.querySelector(".image-count");
+
+  const indicators = [];
+
+  if (urls.length > 1) {
+    for (let i = 0; i < urls.length; i++) {
+      const indicator = createElement("div", null, "indicator", i === 0 ? "active" : "");
+      indicators.push(indicator);
+    }
+    indicatorContainer.append(...indicators);
+  }
+
+  /**
+   * Handle the carousel scroll event.
+   * @param {Event} ev - The scroll event.
+   */
+  const handleCarouselScroll = (ev) => {
+    ev.stopPropagation();
+    const { target } = ev;
+
+    const imageIndex = Math.floor(target.scrollLeft / target.clientWidth);
+    const { left } = target.children[imageIndex].getBoundingClientRect();
+
+    indicators.forEach(indicator => indicator.classList.remove("active"));
+    if (left > 0) indicators[imageIndex].classList.add("active");
+  }
+
+  container.removeEventListener("scroll", handleCarouselScroll);
+  container.addEventListener("scroll", handleCarouselScroll);
+
   urls.forEach(url => {
     const image = createElement("img", null, "cover");
     image.src = url;
