@@ -416,6 +416,10 @@ class ContentService {
       }, 200);
     });
 
+    imageContainer.addEventListener("dragstart", (ev) => {
+      ev.preventDefault();
+    });
+
     const handleTouchStart = (ev) => {
       if (targetIsOverflowingCaption(ev)) return;
       lastClientY = 0;

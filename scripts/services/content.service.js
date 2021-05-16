@@ -114,7 +114,7 @@ export default class ContentService {
 
     imageContainer.addEventListener("dragstart", (ev) => {
       ev.preventDefault();
-    })
+    });
 
     const handleTouchStart = (ev) => {
       if (targetIsOverflowingCaption(ev)) return;
