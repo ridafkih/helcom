@@ -171,9 +171,10 @@ export default class ContentService {
   publish() {
     const post = new PostModule()
       .setAuthor("Helcim Team", "@helcim")
-      .setDate()
       .setCaption(this.caption)
-      .setImages(this.images);
+      .setImages(this.images)
+      .setUserPosted()
+      .setDate();
 
     post.bindToTimeline();
 

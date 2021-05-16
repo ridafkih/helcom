@@ -70,6 +70,16 @@ post-element {
   display: none; }
   post-element.populated {
     display: initial; }
+  post-element.user-posted .post {
+    animation: slide 0.4s ease; }
+
+@keyframes slide {
+  0% {
+    transform: scaleY(0) translateX(-100%); }
+  20% {
+    height: 100%; }
+  100% {
+    transform: scaleY(1) translateX(0); } }
 
 .post {
   border-radius: 4px 24px 24px 24px;

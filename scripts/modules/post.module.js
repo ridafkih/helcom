@@ -7,6 +7,7 @@ const template = document.querySelector("#postTemplate");
  * A timeline post module.
  */
 export default class PostModule extends HTMLElement {
+  userPosted = false;
   rendered = false;
   author = {
     fullName: null,
@@ -14,19 +15,17 @@ export default class PostModule extends HTMLElement {
   };
 
   images = [];
-  posted = new Date();
+  postedDate = new Date();
   caption = "";
 
+  liked = false;
   reactions = {
     likes: 0,
     comments: 0,
     shares: 0,
   };
 
-  liked = false;
-
   _nodeImport;
-
   _dateInterval;
 
   /**
@@ -65,6 +64,16 @@ export default class PostModule extends HTMLElement {
     this.classList.add("populated");
     this.rendered = true;
 
+    return this;
+  }
+
+  /**
+   * Indicates that the post is indeed user posted.
+   * @returns {PostModule} - The post module.
+   */
+  setUserPosted() {
+    this.userPosted = true;
+    this.classList.add("user-posted");
     return this;
   }
 
@@ -120,9 +129,9 @@ export default class PostModule extends HTMLElement {
     const dateElement = this.querySelector(".date");
     const sinceElement = this.querySelector(".since");
 
-    const { fullDateString, since } = parseDate(this.posted);
+    const { fullDateString, since } = parseDate(this.postedDate);
 
-    if (!this.posted) this.posted = date;
+    if (!this.postedDate) this.postedDate = date;
 
     if (dateElement) dateElement.textContent = fullDateString;
     if (sinceElement) sinceElement.textContent = since;
@@ -130,7 +139,7 @@ export default class PostModule extends HTMLElement {
     if (!this._dateInterval) clearInterval(this._dateInterval);
 
     this._dateInterval = setInterval(() => {
-      const { since } = parseDate(this.posted);
+      const { since } = parseDate(this.postedDate);
       if (sinceElement) sinceElement.textContent = since;
     }, 1000);
 
@@ -239,8 +248,8 @@ export default class PostModule extends HTMLElement {
   importFromNode = (node) => {
     this.author.fullName = node.querySelector(".full-name").textContent;
     this.author.handle = node.querySelector(".handle").textContent;
-    this.posted = new Date(
-      parseInt(node.querySelector(".post").dataset.posted)
+    this.postedDate = new Date(
+      parseInt(node.querySelector(".post").dataset.postedDate)
     );
     this.images = Array.from(node.querySelectorAll(".cover-container img")).map(
       ({ src }) => src
