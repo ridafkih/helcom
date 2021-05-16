@@ -406,9 +406,8 @@ post-element {
 
   .attachment,
   .attach {
-    min-width: 88px;
+    width: 88px;
     height: 88px;
-  
     border-radius: 16px;
   }
 
@@ -419,5 +418,9 @@ post-element {
   .attach {
     background: transparent;
     border: 2px dashed $tertiary-text-color;
+
+    input[type="file"] {
+      display: none;
+    } 
   }
 }

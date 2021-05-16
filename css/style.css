@@ -264,7 +264,7 @@ post-element {
   padding-bottom: 12px; }
   .attachments-container .attachment,
   .attachments-container .attach {
-    min-width: 88px;
+    width: 88px;
     height: 88px;
     border-radius: 16px; }
   .attachments-container .attachment {
@@ -272,3 +272,5 @@ post-element {
   .attachments-container .attach {
     background: transparent;
     border: 2px dashed #6B7785; }
+    .attachments-container .attach input[type="file"] {
+      display: none; }
