@@ -241,7 +241,7 @@ export function populateImageCarousel(container, urls) {
 
     const imageIndex = Math.round(target.scrollLeft / target.clientWidth);
     indicators.forEach(indicator => indicator.classList.remove("active"));
-    indicators[imageIndex].classList.add("active");
+    if (indicators[imageIndex]) indicators[imageIndex].classList.add("active");
   }
 
   container.removeEventListener("scroll", handleCarouselScroll);
