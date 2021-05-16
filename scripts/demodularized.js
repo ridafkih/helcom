@@ -458,6 +458,7 @@ class ContentService {
     };
 
     const handleTouchEnd = () => {
+      if (!dragging) return;
       dragging = false;
 
       const momentum = calculateMomentum(touchHistory);
