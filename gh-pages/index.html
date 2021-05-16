@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Helcom — The Community Board</title>
+  </head>
+  <body>
+    <!-- Modal Container -->
+    <div id="modalsContainer">
+      <div class="modal" id="createPost">
+        <div class="modal-header">
+          <div class="modal-title">Create Post</div>
+          <button class="modal-close">
+            <object data="./public/svgs/close.svg" type="image/svg+xml"></object>
+          </button>
+        </div>
+        <div
+          class="caption-input"
+          contenteditable="true"
+          id="contentInput"
+        ></div>
+        <div class="attachments-container">
+          <label class="attach">
+            <input id="fileUpload" type="file" accept="image/*" multiple></input>
+            <object data="./public/svgs/plus.svg" type="image/svg+xml"></object>
+          </label>
+        </div>
+        <button class="modal-button" id="preview" disabled>Preview Post</button>
+      </div>
+      <div class="modal dragging" id="previewPost">
+        <div class="post-preview">
+          <div class="cover-container"></div>
+          <div class="post-content">
+            <div class="metadata">
+              <div class="time-info">
+                <div class="date"></div>
+                <div class="since"></div>
+              </div>
+              <div class="image-count"></div>
+            </div>
+            <div class="caption"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Header Element -->
+    <header class="header">
+      <button class="header-menu">
+        <object data="./public/svgs/hamburger.svg" type="image/svg+xml"></object>
+      </button>
+      <div class="header-logo-container">
+        <img src="public/images/logo.svg" class="header-logo" />
+      </div>
+      <div class="header-avatar-container">
+        <img src="https://pbs.twimg.com/profile_images/1268634165995429888/CHymLbpm_400x400.jpg" class="header-avatar" />
+      </div>
+    </header>
+    <!-- Section Title -->
+    <h1 id="title">For You</h1>
+    <!-- Main Body Content -->
+    <main>
+      <post-element>
+        <div class="author">
+          <div class="avatar-container">
+            <img src="./public/images/placeholders/rebecca-mckenzie/avatar.png" alt="" class="avatar" />
+          </div>
+          <div class="author-identity">
+            <div class="full-name">Rebecca McKenzie</div>
+            <div class="handle">@beccmckez</div>
+          </div>
+        </div>
+        <div class="post" data-posted-date="1621060882834">
+          <div class="cover-container">
+            <img
+              src="./public/images/placeholders/rebecca-mckenzie/cover.png"
+              alt=""
+              class="cover"
+            />
+            <img
+              src="./public/images/placeholders/rebecca-mckenzie/cover.png"
+              alt=""
+              class="cover"
+            />
+            <img
+              src="./public/images/placeholders/rebecca-mckenzie/cover.png"
+              alt=""
+              class="cover"
+            />
+          </div>
+          <div class="post-content">
+            <div class="metadata">
+              <div class="time-info">
+                <div class="date"></div>
+                <div class="since"></div>
+              </div>
+              <div class="image-count"></div>
+            </div>
+            <div class="caption">
+              I was going to look through my actual Instagram feed to try to find one of my friends that I could get a long caption for, but I figured might as well just write what I'm thinking... well here it is! A long. Ass. Caption. One that would require a very cool, very swag, very expandable caption element to read the entire thing! :)
+            </div>
+            <div class="actions">
+              <div class="action likes" data-count="3412">
+                <button class="action-button"></button>
+              </div>
+              <div class="action comments" data-count="302">
+                <button class="action-button"></button>
+              </div>
+              <div class="action shares" data-count="42">
+                <button class="action-button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </post-element>
+      <post-element>
+        <div class="author">
+          <div class="avatar-container">
+            <img src="./public/images/placeholders/lauren-mann/avatar.png" alt="" class="avatar" />
+          </div>
+          <div class="author-identity">
+            <div class="full-name">Lauren Mann</div>
+            <div class="handle">@laurenm01</div>
+          </div>
+        </div>
+        <div class="post" data-posted-date="1621060882834">
+          <div class="cover-container">
+            <img
+              src="./public/images/placeholders/lauren-mann/cover.png"
+              alt=""
+              class="cover"
+            />
+          </div>
+          <div class="post-content">
+            <div class="metadata">
+              <div class="time-info">
+                <div class="date"></div>
+                <div class="since"></div>
+              </div>
+              <div class="image-count"></div>
+            </div>
+            <div class="caption">Was having an off-day and then I won a free Starbucks pen... Day fixed. c:</div>
+            <div class="actions">
+              <div class="action likes" data-count="605">
+                <button class="action-button"></button>
+              </div>
+              <div class="action comments" data-count="51">
+                <button class="action-button"></button>
+              </div>
+              <div class="action shares" data-count="24">
+                <button class="action-button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </post-element>
+      <post-element>
+        <div class="author">
+          <div class="avatar-container">
+            <img src="./public/images/placeholders/sheri-peters/avatar.png" alt="" class="avatar" />
+          </div>
+          <div class="author-identity">
+            <div class="full-name">Sheri Peters</div>
+            <div class="handle">@ppeterss</div>
+          </div>
+        </div>
+        <div class="post" data-posted-date="1621060882834">
+          <div class="cover-container"></div>
+          <div class="post-content">
+            <div class="metadata">
+              <div class="time-info">
+                <div class="date"></div>
+                <div class="since"></div>
+              </div>
+              <div class="image-count"></div>
+            </div>
+            <div class="caption">Why is regular sleeping so much more lame than when you’re supposed to get up, but don’t?</div>
+            <div class="actions">
+              <div class="action likes" data-count="200">
+                <button class="action-button"></button>
+              </div>
+              <div class="action comments" data-count="16">
+                <button class="action-button"></button>
+              </div>
+              <div class="action shares" data-count="4">
+                <button class="action-button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </post-element>
+      <post-element>
+        <div class="author">
+          <div class="avatar-container">
+            <img src="./public/images/placeholders/thomas-funk/avatar.png" alt="" class="avatar" />
+          </div>
+          <div class="author-identity">
+            <div class="full-name">Thomas Funk</div>
+            <div class="handle">@thunk</div>
+          </div>
+        </div>
+        <div class="post" data-posted-date="1621060882834">
+          <div class="cover-container">
+            <img
+              src="./public/images/placeholders/thomas-funk/cover.png"
+              alt=""
+              class="cover"
+            />
+          </div>
+          <div class="post-content">
+            <div class="metadata">
+              <div class="metadata">
+                <div class="time-info">
+                  <div class="date"></div>
+                  <div class="since"></div>
+                </div>
+                <div class="image-count"></div>
+              </div>
+            <div class="caption"></div>
+            <div class="actions">
+              <div class="action likes" data-count="8283">
+                <button class="action-button"></button>
+              </div>
+              <div class="action comments" data-count="800">
+                <button class="action-button"></button>
+              </div>
+              <div class="action shares" data-count="4020">
+                <button class="action-button"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </post-element>
+    </main>
+    <button id="upload">
+      <object data="./public/svgs/new-post.svg" type="image/svg+xml"></object>
+    </button>
+    <!-- Post Template -->
+    <template id="postTemplate">
+      <div class="author">
+        <div class="avatar-container">
+          <img src="" alt="" class="avatar" />
+        </div>
+        <div class="author-identity">
+          <div class="full-name"></div>
+          <div class="handle"></div>
+        </div>
+      </div>
+      <div class="post" data-posted="">
+        <div class="cover-container"></div>
+        <div class="post-content">
+          <div class="metadata">
+            <div class="time-info">
+              <div class="date"></div>
+              <div class="since"></div>
+            </div>
+            <div class="image-count"></div>
+          </div>
+          <div class="caption"></div>
+          <div class="actions">
+            <div class="action likes" data-count="0">
+              <button class="action-button">
+                <object data="./public/svgs/heart.svg" type="image/svg+xml"></object>
+              </button>
+            </div>
+            <div class="action comments" data-count="0">
+              <button class="action-button">
+                <object data="./public/svgs/chat-bubble.svg" type="image/svg+xml"></object>
+              </button>
+            </div>
+            <div class="action shares" data-count="0">
+              <button class="action-button">
+                <object data="./public/svgs/paper-plane.svg" type="image/svg+xml"></object>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <!-- Chrome Transition Bug Fix -->
+    <script></script>
+    <!-- Scripts -->
+    <script type="module" src="scripts/script.js"></script>
+  </body>
+</html>
