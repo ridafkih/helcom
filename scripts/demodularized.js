@@ -495,17 +495,13 @@ class ContentService {
       touchHistory = [];
     };
 
-    previewModal.addEventListener("touchstart", handleTouchStart, {
-      passive: true,
-    });
-    previewModal.addEventListener("touchmove", handleTouchMove, {
-      passive: true,
-    });
-    previewModal.addEventListener("touchend", handleTouchEnd);
+    previewModal.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("touchmove", handleTouchMove, { passive: true });
+    document.addEventListener("touchend", handleTouchEnd);
 
     previewModal.addEventListener("mousedown", handleTouchStart);
-    previewModal.addEventListener("mousemove", handleTouchMove);
-    previewModal.addEventListener("mouseup", handleTouchEnd);
+    document.addEventListener("mousemove", handleTouchMove);
+    document.addEventListener("mouseup", handleTouchEnd);
   }
 
   setCaption(text = "") {
