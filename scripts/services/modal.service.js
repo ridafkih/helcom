@@ -1,3 +1,5 @@
+import { parseDate } from "./time.service.js";
+
 export default class ModalService {
   _element = document.querySelector("#modalsContainer");
   _events = [
@@ -9,7 +11,11 @@ export default class ModalService {
     {
       event: "click",
       element: document.querySelector("#preview"),
-      res: () => this.activate("previewPost"),
+      res: () => {
+        const element = document.querySelector("#previewPost");
+        element.querySelector(".date").textContent = parseDate().fullDateString;
+        this.activate("previewPost");
+      },
     },
   ];
 
