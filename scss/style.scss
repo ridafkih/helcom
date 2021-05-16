@@ -1,9 +1,9 @@
-@import './overwrites';
-@import './resets';
-@import './variables';
+@import "./overwrites";
+@import "./resets";
+@import "./variables";
 
 @function opacity($hex, $opacity) {
-  @return rgba($hex, $opacity)
+  @return rgba($hex, $opacity);
 }
 
 @mixin flex-center {
@@ -62,9 +62,9 @@ header {
   .header-menu {
     width: $innerSize;
     height: $innerSize;
-    
+
     border-radius: 8px;
-  
+
     background: $secondary-color;
     color: $accent-color;
   }
@@ -84,7 +84,7 @@ header {
 .author {
   display: flex;
   align-items: center;
-  
+
   margin-bottom: 8px;
 }
 
@@ -92,7 +92,7 @@ header {
   position: relative;
   width: 32px;
   height: 32px;
-  
+
   border-radius: 50%;
   background: $secondary-color;
   overflow: hidden;
@@ -106,12 +106,12 @@ header {
 
 .author-identity {
   margin-left: 12px;
-  
+
   .full-name {
     font-size: 12px;
     font-weight: 600;
   }
-  
+
   .handle {
     font-size: 10px;
     color: $tertiary-text-color;
@@ -157,7 +157,7 @@ post-element {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   border-radius: inherit;
-  
+
   img {
     min-height: 50px;
     max-height: 450px;
@@ -219,13 +219,12 @@ post-element {
       background: rgba($accent-color, 0.3);
 
       transition: 0.12s ease;
-      
+
       &.active {
         flex-grow: 3;
         background: $accent-color;
       }
     }
-
   }
 }
 
@@ -267,7 +266,7 @@ post-element {
       display: none;
     }
 
-    &::after {  
+    &::after {
       content: "Read More";
     }
   }
@@ -292,28 +291,28 @@ post-element {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  
+
     color: $quinary-text-color;
 
     &:first-child {
       margin-right: 6px;
     }
-  
+
     &:last-child {
       margin-left: auto;
     }
-  
+
     .action-button {
       @include flex-center;
 
       width: 42px;
       height: 42px;
-  
+
       border-radius: 50%;
-  
+
       background: $primary-color;
     }
-  
+
     &::after {
       content: attr(data-count);
       font-size: 12px;
@@ -326,7 +325,7 @@ post-element {
 
 .likes.liked {
   color: $love-red;
-  
+
   .action-button {
     position: relative;
     background: $love-red;
@@ -367,12 +366,11 @@ post-element {
   }
 }
 
-
 // Upload Button
 
 #upload {
   @include flex-center;
-  
+
   position: fixed;
   bottom: 24px;
   left: 0;
@@ -421,7 +419,7 @@ post-element {
   display: none;
   box-sizing: border-box;
   width: 90vw;
-  
+
   padding: 24px 16px;
   border-radius: 24px;
 
@@ -434,10 +432,10 @@ post-element {
   .modal-button {
     transition: 0.16s ease;
     transform: scale(1);
-    
+
     width: 100%;
     padding: 16px;
-    
+
     margin-top: 16px;
     border-radius: 8px;
 
@@ -536,7 +534,7 @@ post-element {
     top: -$distanceFromElement;
     content: "Swipe Up to Publish";
   }
-  
+
   &::after {
     bottom: -$distanceFromElement;
     content: "Swipe Down to Edit";
@@ -590,6 +588,6 @@ post-element {
     input[type="file"] {
       display: none;
       box-sizing: border-box;
-    } 
+    }
   }
 }

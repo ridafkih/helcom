@@ -1,4 +1,3 @@
-
 export function parseDate(date = new Date()) {
   const options = { month: "short", day: "numeric", year: "numeric" };
 

@@ -13,7 +13,7 @@ export default class PostModule extends HTMLElement {
   author = {
     fullName: null,
     handle: null,
-    avatar: null
+    avatar: null,
   };
 
   images = [];
@@ -45,7 +45,7 @@ export default class PostModule extends HTMLElement {
       this.innerHTML = template.innerHTML;
       this.populate();
 
-      const likeButton = this.querySelector('.action.likes .action-button');
+      const likeButton = this.querySelector(".action.likes .action-button");
       likeButton.addEventListener("click", () => this.toggleLike());
     }
   }
@@ -210,14 +210,17 @@ export default class PostModule extends HTMLElement {
 
     let [...captionCopy] = this.caption.slice(0).trim();
 
-    const newlineIndices = captionCopy.map((x, i) => {
-      return x === "\n" ? i : undefined;
-    }).filter(Number.isInteger);
+    const newlineIndices = captionCopy
+      .map((x, i) => {
+        return x === "\n" ? i : undefined;
+      })
+      .filter(Number.isInteger);
 
     const newlineCutoff = newlineIndices[newlineLimit];
     if (newlineCutoff > newlineLimit) cutoff = newlineCutoff;
-    
-    const collapsable = this.caption.length > cutoff || newlineCutoff > newlineLimit;
+
+    const collapsable =
+      this.caption.length > cutoff || newlineCutoff > newlineLimit;
 
     const paragraph = createElement(
       "div",
@@ -281,21 +284,20 @@ export default class PostModule extends HTMLElement {
 
     node.replaceWith(this);
 
-    if (!this.rendered) 
-      this.populate();
+    if (!this.rendered) this.populate();
 
     return this;
   };
 
   toggleLike = () => {
-    const likeButton = this.querySelector('.action.likes');
+    const likeButton = this.querySelector(".action.likes");
     this.liked = !this.liked;
 
-    this.reactions.likes += (this.liked ? 1 : -1);
+    this.reactions.likes += this.liked ? 1 : -1;
     this.setReactions({ likes: this.reactions.likes });
 
     likeButton.classList[this.liked ? "add" : "remove"]("liked");
-  }
+  };
 
   /**
    * Prepend the active element to the timeline.

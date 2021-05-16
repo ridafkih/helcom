@@ -44,17 +44,21 @@ export default class ContentService {
    */
   registerFileUpload() {
     const _this = this;
-    const node = document.querySelector("input[type=\"file\"]");
-    node.addEventListener("change", function () {
-      const { files } = this;
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!file.type.startsWith("image/")) continue;
-        _this.upload(file);
-      }
-      _this.updatePreviewImages();
-      node.value = "";
-    }, false);
+    const node = document.querySelector('input[type="file"]');
+    node.addEventListener(
+      "change",
+      function () {
+        const { files } = this;
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (!file.type.startsWith("image/")) continue;
+          _this.upload(file);
+        }
+        _this.updatePreviewImages();
+        node.value = "";
+      },
+      false
+    );
   }
 
   /**
@@ -81,7 +85,7 @@ export default class ContentService {
    * preview modal.
    */
   updatePreviewImages() {
-    const container = document.querySelector('.cover-container');
+    const container = document.querySelector(".cover-container");
     populateImageCarousel(container, this.images);
   }
 
@@ -89,7 +93,8 @@ export default class ContentService {
    * Register the swipe events for the preview modal
    */
   registerSwipeEvents() {
-    let startPosition, touchHistory = [];
+    let startPosition,
+      touchHistory = [];
     const previewModal = document.querySelector("#previewPost");
     const imageContainer = previewModal.querySelector(".cover-container");
 
@@ -99,13 +104,13 @@ export default class ContentService {
     let dragTimeout;
 
     imageContainer.addEventListener("scroll", () => {
-      dragDisabled = true; 
+      dragDisabled = true;
       clearTimeout(dragTimeout);
       dragTimeout = setTimeout(() => {
         dragDisabled = false;
       }, 200);
-    })
-    
+    });
+
     const handleTouchStart = (ev) => {
       if (targetIsOverflowingCaption(ev)) return;
       dragging = true;
@@ -119,7 +124,7 @@ export default class ContentService {
       }
 
       touchHistory = [];
-    }
+    };
 
     const handleTouchMove = (ev) => {
       if (targetIsOverflowingCaption(ev) || dragDisabled || !dragging) return;
@@ -133,11 +138,11 @@ export default class ContentService {
         const { clientY } = ev;
         delta = clientY - startPosition;
       }
-      
+
       touchHistory.push(delta);
       if (touchHistory.length > 10) touchHistory.shift();
       previewModal.style.transform = `translateY(${delta}px)`;
-    }
+    };
 
     const handleTouchEnd = (ev) => {
       dragging = false;
@@ -171,10 +176,14 @@ export default class ContentService {
       }, delay);
 
       touchHistory = [];
-    }
+    };
 
-    previewModal.addEventListener("touchstart", handleTouchStart, { passive: true });
-    previewModal.addEventListener("touchmove", handleTouchMove, { passive: true });
+    previewModal.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    previewModal.addEventListener("touchmove", handleTouchMove, {
+      passive: true,
+    });
     previewModal.addEventListener("touchend", handleTouchEnd);
 
     previewModal.addEventListener("mousedown", handleTouchStart);
@@ -192,8 +201,8 @@ export default class ContentService {
    * Destroy the attachment blobs and revoke URLs.
    */
   destroyAttachments() {
-    const attachments = Array.from(document.querySelectorAll('.attachment'));
-    attachments.forEach(attachment => attachment.remove());
+    const attachments = Array.from(document.querySelectorAll(".attachment"));
+    attachments.forEach((attachment) => attachment.remove());
     this.images.forEach(URL.revokeObjectURL);
     this.images = [];
   }
@@ -203,13 +212,16 @@ export default class ContentService {
    */
   updatePreviewButton() {
     const button = document.querySelector("#preview");
-    button.disabled = this.images.length === 0 && this.caption.trim().length === 0;
+    button.disabled =
+      this.images.length === 0 && this.caption.trim().length === 0;
   }
 
   publish() {
     const post = new PostModule()
       .setAuthor("Helcim Team", "@helcim")
-      .setAvatar("https://pbs.twimg.com/profile_images/1268634165995429888/CHymLbpm_400x400.jpg")
+      .setAvatar(
+        "https://pbs.twimg.com/profile_images/1268634165995429888/CHymLbpm_400x400.jpg"
+      )
       .setCaption(this.caption)
       .setImages(this.images)
       .setUserPosted()
@@ -247,13 +259,20 @@ export function populateImageCarousel(container, urls) {
 
   const parent = container.parentElement;
   const indicatorContainer = parent.querySelector(".image-count");
-  Array.from(indicatorContainer.children).forEach(element => element.remove());
+  Array.from(indicatorContainer.children).forEach((element) =>
+    element.remove()
+  );
 
   const indicators = [];
 
   if (urls.length > 1) {
     for (let i = 0; i < urls.length; i++) {
-      const indicator = createElement("div", null, "indicator", i === 0 ? "active" : "");
+      const indicator = createElement(
+        "div",
+        null,
+        "indicator",
+        i === 0 ? "active" : ""
+      );
       indicators.push(indicator);
     }
     indicatorContainer.append(...indicators);
@@ -268,14 +287,14 @@ export function populateImageCarousel(container, urls) {
     const { target } = ev;
 
     const imageIndex = Math.round(target.scrollLeft / target.clientWidth);
-    indicators.forEach(indicator => indicator.classList.remove("active"));
+    indicators.forEach((indicator) => indicator.classList.remove("active"));
     if (indicators[imageIndex]) indicators[imageIndex].classList.add("active");
-  }
+  };
 
   container.removeEventListener("scroll", handleCarouselScroll);
   container.addEventListener("scroll", handleCarouselScroll);
 
-  urls.forEach(url => {
+  urls.forEach((url) => {
     const image = createElement("img", null, "cover");
     image.src = url;
     container.appendChild(image);
@@ -283,8 +302,10 @@ export function populateImageCarousel(container, urls) {
 }
 
 export function registerTimelinePosts() {
-  const posts = Array.from(document.querySelectorAll('post-element'));
-  const modules = posts.map(postNode => new PostModule().importFromNode(postNode));
+  const posts = Array.from(document.querySelectorAll("post-element"));
+  const modules = posts.map((postNode) =>
+    new PostModule().importFromNode(postNode)
+  );
 }
 
 function calculateMomentum(history = touchHistory) {
