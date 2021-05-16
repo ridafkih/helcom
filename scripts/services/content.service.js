@@ -181,6 +181,7 @@ export default class ContentService {
   publish() {
     const post = new PostModule()
       .setAuthor("Helcim Team", "@helcim")
+      .setAvatar("https://pbs.twimg.com/profile_images/1268634165995429888/CHymLbpm_400x400.jpg")
       .setCaption(this.caption)
       .setImages(this.images)
       .setUserPosted()
@@ -222,7 +223,7 @@ export function populateImageCarousel(container, urls) {
 
 export function registerTimelinePosts() {
   const posts = Array.from(document.querySelectorAll('post-element'));
-  posts.forEach(new PostModule().importFromNode);
+  const modules = posts.map(postNode => new PostModule().importFromNode(postNode));
 }
 
 function calculateMomentum(history = touchHistory) {

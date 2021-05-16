@@ -43,6 +43,8 @@ header {
     background: #1F252C;
     color: #4F94EB; }
   header .header-avatar {
+    border-radius: 8px;
+    overflow: hidden;
     width: 32px;
     height: 32px; }
 
@@ -55,10 +57,16 @@ header {
   margin-bottom: 8px; }
 
 .avatar-container {
+  position: relative;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #1F252C; }
+  background: #1F252C;
+  overflow: hidden; }
+  .avatar-container .avatar {
+    width: 100%;
+    object-fit: cover;
+    object-position: center; }
 
 .author-identity {
   margin-left: 12px; }

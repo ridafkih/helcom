@@ -65,6 +65,8 @@ header {
   }
 
   .header-avatar {
+    border-radius: 8px;
+    overflow: hidden;
     width: $innerSize;
     height: $innerSize;
   }
@@ -82,11 +84,19 @@ header {
 }
 
 .avatar-container {
+  position: relative;
   width: 32px;
   height: 32px;
   
   border-radius: 50%;
   background: $secondary-color;
+  overflow: hidden;
+
+  .avatar {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 .author-identity {

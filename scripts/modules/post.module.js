@@ -13,6 +13,7 @@ export default class PostModule extends HTMLElement {
   author = {
     fullName: null,
     handle: null,
+    avatar: null
   };
 
   images = [];
@@ -44,8 +45,7 @@ export default class PostModule extends HTMLElement {
       this.innerHTML = template.innerHTML;
       this.populate();
 
-
-      const likeButton = document.querySelector('.action.likes .action-button');
+      const likeButton = this.querySelector('.action.likes .action-button');
       likeButton.addEventListener("click", () => this.toggleLike());
     }
   }
@@ -56,6 +56,7 @@ export default class PostModule extends HTMLElement {
    */
   populate() {
     this.setAuthor();
+    this.setAvatar();
     this.setCaption();
     this.setDate();
     this.setReactions();
@@ -94,6 +95,20 @@ export default class PostModule extends HTMLElement {
     if (fullNameElement) fullNameElement.textContent = fullName;
     if (handleElement) handleElement.textContent = handle;
 
+    return this;
+  }
+
+  /**
+   * Set the avatar of the author of the post module.
+   * @param {string} url - The url of the image.
+   * @returns {PostModule} - The post module.
+   */
+  setAvatar(url) {
+    if (!this.author.avatar) this.author.avatar = url;
+    const avatarElement = this.querySelector(".avatar");
+    if (avatarElement) {
+      avatarElement.src = this.author.avatar;
+    }
     return this;
   }
 
@@ -249,6 +264,8 @@ export default class PostModule extends HTMLElement {
   importFromNode = (node) => {
     this.author.fullName = node.querySelector(".full-name").textContent;
     this.author.handle = node.querySelector(".handle").textContent;
+    this.author.avatar = node.querySelector(".avatar").getAttribute("src");
+
     this.postedDate = new Date(
       parseInt(node.querySelector(".post").dataset.postedDate)
     );
