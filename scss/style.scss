@@ -110,13 +110,16 @@ post-element {
 }
 
 .cover-container {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
   border-radius: inherit;
   
   img {
     min-height: 250px;
     max-height: 450px;
 
-    width: 100%;
+    min-width: 100%;
     object-fit: cover;
     border-radius: inherit;
   }

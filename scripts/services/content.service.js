@@ -5,8 +5,10 @@ import { createElement } from "./dom.service.js";
  * Content Management Service
  */
 export default class ContentService {
+  images = [];
   caption = "";
   captionPreview = document.querySelector(".post-preview .caption");
+
   _input = document.querySelector("#contentInput");
   _modalManager;
 
@@ -49,6 +51,7 @@ export default class ContentService {
         if (!file.type.startsWith("image/")) continue;
         _this.upload(file);
       }
+      node.value = "";
     }, false);
   }
 
@@ -56,7 +59,7 @@ export default class ContentService {
    * Upload and preview a file.
    * @param {File} file - The file to be uploaded.
    */
-  upload(file) {
+  upload( file) {
     const label = document.querySelector("label.attach");
     const container = document.querySelector(".attachments-container");
 
@@ -65,6 +68,8 @@ export default class ContentService {
     image.src = URL.createObjectURL(file);
     imageContainer.appendChild(image);
 
+    this.images.push(image.src);
+
     container.insertBefore(imageContainer, label);
   }
 
@@ -72,8 +77,7 @@ export default class ContentService {
    * Register the swipe events for the preview modal
    */
   registerSwipeEvents() {
-    let startPosition,
-      touchHistory = [];
+    let startPosition, touchHistory = [];
     const previewModal = document.querySelector("#previewPost");
 
     previewModal.addEventListener(
@@ -140,11 +144,22 @@ export default class ContentService {
     this.caption = text;
   }
 
+  /**
+   * Destroy the attachment blobs and revoke URLs.
+   */
+  destroyAttachments() {
+    const attachments = Array.from(document.querySelectorAll('.attachment'));
+    attachments.forEach(attachment => attachment.remove());
+    this.images.forEach(URL.revokeObjectURL);
+    this.images = [];
+  }
+
   publish() {
     const post = new PostModule()
       .setAuthor("Helcim Team", "@helcim")
       .setDate()
-      .setCaption(this.caption);
+      .setCaption(this.caption)
+      .setImages(this.images);
 
     post.bindToTimeline();
 
@@ -154,6 +169,7 @@ export default class ContentService {
   reset() {
     this._input.textContent = "";
     this.setCaption();
+    this.destroyAttachments();
   }
 }
 

@@ -6,6 +6,7 @@ const template = document.querySelector("#postTemplate");
  * A timeline post module.
  */
 export default class PostModule extends HTMLElement {
+  rendered = false;
   author = {
     fullName: null,
     handle: null,
@@ -52,8 +53,10 @@ export default class PostModule extends HTMLElement {
     this.setDate();
     this.setReactions();
     this.registerCaption();
+    this.setImages();
 
     this.classList.add("populated");
+    this.rendered = true;
 
     return this;
   }
@@ -85,6 +88,25 @@ export default class PostModule extends HTMLElement {
   setCaption(caption = this.caption) {
     this.caption = caption;
     this.parseCaption();
+    return this;
+  }
+
+  /**
+   * Sets the images of the post.
+   * @param {string[]} urls - Array of src URLs.
+   * @returns {PostModule} - The post module.
+   */
+  setImages(urls = []) {
+    if (urls.length > 0) this.images = urls;
+    console.log(this.images);
+
+    const container = this.querySelector(".cover-container");
+    if (!container) return this;
+    this.images.forEach(url => {
+      const image = createElement("img", null, "cover");
+      image.src = url;
+      container.appendChild(image);
+    });
     return this;
   }
 
@@ -133,7 +155,7 @@ export default class PostModule extends HTMLElement {
   /**
    * Populate a reaction with a reaction count.
    * @param {'likes'|'comments'|'shares'} reactionName - The name of the reaction.
-   * @param {number} count - The amount of reactions. 
+   * @param {number} count - The amount of reactions.
    */
   populateReaction(reactionName, count) {
     const container = this.querySelector(`.action.${reactionName}`);
@@ -205,7 +227,9 @@ export default class PostModule extends HTMLElement {
   importFromNode = (node) => {
     this.author.fullName = node.querySelector(".full-name").textContent;
     this.author.handle = node.querySelector(".handle").textContent;
-    this.posted = new Date(parseInt(node.querySelector(".post").dataset.posted));
+    this.posted = new Date(
+      parseInt(node.querySelector(".post").dataset.posted)
+    );
     this.images = Array.from(node.querySelectorAll(".cover-container img")).map(
       ({ src }) => src
     );
@@ -217,7 +241,9 @@ export default class PostModule extends HTMLElement {
     });
 
     node.replaceWith(this);
-    this.populate();
+
+    if (!this.rendered) 
+      this.populate();
 
     return this;
   };
