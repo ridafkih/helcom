@@ -162,9 +162,9 @@ post-element {
     margin-top: 8px;
     text-align: center; }
 
-.action.likes:active {
+.action.likes.liked {
   color: #EC6363; }
-  .action.likes:active .action-button {
+  .action.likes.liked .action-button {
     background: #EC6363;
     color: white; }
 

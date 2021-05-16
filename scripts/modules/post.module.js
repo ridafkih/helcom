@@ -23,6 +23,8 @@ export default class PostModule extends HTMLElement {
     shares: 0,
   };
 
+  liked = false;
+
   _nodeImport;
 
   _dateInterval;
@@ -41,6 +43,10 @@ export default class PostModule extends HTMLElement {
     if (!this.innerHTML.trim()) {
       this.innerHTML = template.innerHTML;
       this.populate();
+
+
+      const likeButton = document.querySelector('.action.likes .action-button');
+      likeButton.addEventListener("click", () => this.toggleLike());
     }
   }
 
@@ -144,6 +150,7 @@ export default class PostModule extends HTMLElement {
     this.populateReaction("likes", likes);
     this.populateReaction("comments", comments);
     this.populateReaction("shares", shares);
+
     return this;
   };
 
@@ -157,9 +164,9 @@ export default class PostModule extends HTMLElement {
     if (container) {
       const total = count || this.reactions[reactionName];
       container.dataset.count = total;
-      this.reactions[reactionName] = total;
+      this.reactions[reactionName] = parseInt(total);
     } else {
-      this.reactions[reactionName] = count || 0;
+      this.reactions[reactionName] = parseInt(count) || 0;
     }
   }
 
@@ -252,6 +259,16 @@ export default class PostModule extends HTMLElement {
 
     return this;
   };
+
+  toggleLike = () => {
+    const likeButton = this.querySelector('.action.likes');
+    this.liked = !this.liked;
+
+    this.reactions.likes += (this.liked ? 1 : -1);
+    this.setReactions({ likes: this.reactions.likes });
+
+    likeButton.classList[this.liked ? "add" : "remove"]("liked");
+  }
 
   /**
    * Prepend the active element to the timeline.

@@ -247,7 +247,7 @@ post-element {
   }
 }
 
-.action.likes:active {
+.action.likes.liked {
   color: $love-red;
   
   .action-button {
