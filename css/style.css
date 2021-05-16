@@ -376,12 +376,16 @@ post-element {
   100% {
     transform: rotate(0); } }
 
-.post-preview .cover-container {
-  max-height: 400px;
-  border-radius: 16px; }
-
-.post-preview .caption {
-  margin-bottom: 0; }
+.post-preview {
+  -webkit-user-drag: none; }
+  .post-preview .cover-container {
+    user-select: none;
+    pointer-events: none;
+    max-height: 400px;
+    border-radius: 16px; }
+  .post-preview .caption {
+    user-select: none;
+    margin-bottom: 0; }
 
 .attachments-container {
   display: flex;

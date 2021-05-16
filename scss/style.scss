@@ -564,13 +564,18 @@ post-element {
 
 .post-preview {
   .cover-container {
+    user-select: none;
+    pointer-events: none;
     max-height: 400px;
     border-radius: 16px;
   }
 
   .caption {
+    user-select: none;
     margin-bottom: 0;
   }
+
+  -webkit-user-drag: none;
 }
 
 .attachments-container {
