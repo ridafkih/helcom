@@ -239,11 +239,9 @@ export function populateImageCarousel(container, urls) {
     ev.stopPropagation();
     const { target } = ev;
 
-    const imageIndex = Math.floor(target.scrollLeft / target.clientWidth);
-    const { left } = target.children[imageIndex].getBoundingClientRect();
-
+    const imageIndex = Math.round(target.scrollLeft / target.clientWidth);
     indicators.forEach(indicator => indicator.classList.remove("active"));
-    if (left > 0) indicators[imageIndex].classList.add("active");
+    indicators[imageIndex].classList.add("active");
   }
 
   container.removeEventListener("scroll", handleCarouselScroll);
