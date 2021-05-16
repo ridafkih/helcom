@@ -35,8 +35,23 @@ export default class PostModule extends HTMLElement {
 
   connectedCallback() {
     if (this._nodeImport) this.importFromNode(this._nodeImport);
-    if (!this.innerHTML.trim()) this.innerHTML = template.innerHTML;
-    this.registerCaption();
+    if (!this.innerHTML.trim()) {
+      this.innerHTML = template.innerHTML;
+      this.populate();
+    }
+  }
+
+  /**
+   * Populate the element with all the information.
+   * @returns {PostModule} - The post module.
+   */
+  populate() {
+    this.setAuthor();
+    this.setCaption();
+    this.setDate();
+    this.setReactions();
+
+    return this;
   }
 
   /**
@@ -45,12 +60,16 @@ export default class PostModule extends HTMLElement {
    * @param {string} handle - The users handle.
    * @returns {PostModule} - The post module.
    */
-  setAuthor(fullName, handle) {
+  setAuthor(fullName = this.author.fullName, handle = this.author.handle) {
     this.author.fullName = fullName;
     this.author.handle = handle;
 
-    this.querySelector(".full-name").textContent = fullName;
-    this.querySelector(".handle").textContent = handle;
+    const fullNameElement = this.querySelector(".full-name");
+    const handleElement = this.querySelector(".handle");
+
+    if (fullNameElement) fullNameElement.textContent = fullName;
+
+    if (handleElement) handleElement.textContent = handle;
 
     return this;
   }
@@ -60,7 +79,7 @@ export default class PostModule extends HTMLElement {
    * @param {string} caption - The new caption for the post.
    * @returns {PostModule} - The post module.
    */
-  setCaption(caption) {
+  setCaption(caption = this.caption) {
     this.caption = caption;
     this.parseCaption();
     return this;
@@ -72,8 +91,11 @@ export default class PostModule extends HTMLElement {
    * @returns {PostModule} - The post module.
    */
   setDate(date = new Date()) {
+    const postElement = this.querySelector('.post');
     this.posted = date;
-    document.querySelector(".post").dataset.posted = date;
+    if (postElement)
+      this.querySelector(".post").dataset.posted = date;
+
     return this;
   }
 
@@ -82,29 +104,38 @@ export default class PostModule extends HTMLElement {
    * @param {{
    *  likes: number,
    *  comments: number,
-   *  shares: number 
+   *  shares: number
    * }} opts - The options containing the target reaction counts.
    * @returns {PostModule} - The post module.
    */
-  setReactions({
-    likes = this.reactions.likes,
-    comments = this.reactions.comments,
-    shares = this.reactions.shares,
-  }) {
-    const likeContainer = document.querySelector(".action.like");
-    const commentContainer = document.querySelector(".action.comment");
-    const shareContainer = document.querySelector(".action.share");
+  setReactions = ({ likes, comments, shares } = {}) => {
+    const likeContainer = this.querySelector(".action.like");
+    const commentContainer = this.querySelector(".action.comment");
+    const shareContainer = this.querySelector(".action.share");
 
-    likeContainer.dataset.count = likes;
-    commentContainer.dataset.count = comments;
-    shareContainer.dataset.count = shares;
-
-    this.reactions.likes = likeContainer.dataset.count;
-    this.reactions.comments = commentContainer.dataset.count;
-    this.reactions.shares = shareContainer.dataset.count;
+    if (likeContainer) {
+      likeContainer.dataset.count = likes || this.reactions.likes;
+      this.reactions.likes = likeContainer.dataset.count;
+    } else {
+      this.reactions.likes = likes || 0;
+    }
+    
+    if (commentContainer) {
+      commentContainer.dataset.count = comments || this.reactions.comments;
+      this.reactions.comments = commentContainer.dataset.count;
+    } else {
+      this.reactions.comments = comments || 0;
+    }
+    
+    if (shareContainer) {
+      shareContainer.dataset.count = shares || this.reactions.shares;
+      this.reactions.shares = shareContainer.dataset.count;
+    } else {
+      this.reactions.shares = shares || 0;
+    }
 
     return this;
-  }
+  };
 
   /**
    * Resizes the caption for easy consuming..
@@ -139,7 +170,7 @@ export default class PostModule extends HTMLElement {
       paragraph.textContent = this.caption;
     }
 
-    captionElement.replaceWith(paragraph);
+    if (captionElement) captionElement.replaceWith(paragraph);
   };
 
   /**
@@ -178,8 +209,8 @@ export default class PostModule extends HTMLElement {
     );
 
     this.registerCaption();
-
     this.reactions = this.getActionsCount();
+    
     return this;
   };
 
@@ -190,8 +221,14 @@ export default class PostModule extends HTMLElement {
 
     return { likes, comments, shares };
   }
+
+  bindToTimeline() {
+    document.querySelector("main").prepend(this);
+  }
 }
 
 function getActionCount(node, className) {
   return node.querySelector(`.action.${className}`).dataset.count;
 }
+
+function parseDate(date = new Date()) {}
