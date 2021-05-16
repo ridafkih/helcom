@@ -13,6 +13,10 @@
   align-items: center;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   width: 100%;
@@ -398,6 +402,10 @@ post-element {
   }
 
   .modal-close {
+    @include flex-center;
+    width: 10px;
+    height: 10px;
+
     padding: 16px;
 
     border-radius: 50%;
@@ -477,7 +485,6 @@ post-element {
 
 .attachments-container {
   display: flex;
-  gap: 6px;
 
   overflow-x: auto;
   padding-bottom: 12px;
@@ -493,6 +500,7 @@ post-element {
   .attachment {
     overflow: hidden;
     background: $primary-color;
+    margin-right: 6px;
 
     img {
       object-fit: cover;
@@ -503,6 +511,8 @@ post-element {
   }
 
   .attach {
+    @include flex-center;
+
     background: transparent;
     border: 2px dashed $tertiary-text-color;
 

@@ -10,6 +10,9 @@ label {
   padding: 0;
   margin: 0; }
 
+html {
+  scroll-behavior: smooth; }
+
 html,
 body {
   width: 100%;
@@ -262,6 +265,12 @@ post-element {
     font-size: 24px;
     font-weight: 600; }
   .modal-header .modal-close {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10px;
+    height: 10px;
     padding: 16px;
     border-radius: 50%;
     background: #161A1F; }
@@ -313,7 +322,6 @@ post-element {
 
 .attachments-container {
   display: flex;
-  gap: 6px;
   overflow-x: auto;
   padding-bottom: 12px; }
   .attachments-container .attachment,
@@ -324,13 +332,18 @@ post-element {
     border-radius: 16px; }
   .attachments-container .attachment {
     overflow: hidden;
-    background: #161A1F; }
+    background: #161A1F;
+    margin-right: 6px; }
     .attachments-container .attachment img {
       object-fit: cover;
       object-position: center;
       width: 100%;
       height: 100%; }
   .attachments-container .attach {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: transparent;
     border: 2px dashed #6B7785; }
     .attachments-container .attach input[type="file"] {
