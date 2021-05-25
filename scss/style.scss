@@ -13,18 +13,24 @@
   align-items: center;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 html,
 body {
   width: 100%;
-
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  background: $primary-color;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body {
+  max-width: 800px;
+
   background: $primary-color;
   color: $primary-text-color;
 
@@ -45,6 +51,10 @@ body {
 
 object {
   pointer-events: none;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 header {
@@ -399,6 +409,7 @@ post-element {
   left: 0;
   right: 0;
 
+
   display: none;
   justify-content: center;
   align-items: center;
@@ -415,6 +426,8 @@ post-element {
 }
 
 .modal {
+  max-width: 700px;
+
   position: relative;
   display: none;
   box-sizing: border-box;
