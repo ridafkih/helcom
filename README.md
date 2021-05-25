@@ -2,6 +2,8 @@
 
 If you'd like to visit the experience, [click here](https://rida.dev/helcom)
 
+Without libraries, Helcom (meaning Helcim Community) was developed using HTML, JavaScript, and SCSS.
+
 Helcom was a front-end design & development coding challenge for the company "Helcim."
 While I didn't get the job, I did put quite a bit of work into both the design and development, and as a result, decided to share it!
 
