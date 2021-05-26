@@ -2,15 +2,19 @@
 
 If you'd like to visit the experience, [click here](https://rida.dev/helcom).
 
-Without libraries or frameworks, Helcom (meaning Helcim Community) was developed using HTML, JavaScript, and SCSS.
+### Technologies and Applications For Project
+* Figma (UI/UX Design)
+* HTML
+* JavaScript
+* SCSS
 
-Helcom was a front-end design & development coding challenge for the company "Helcim."
+*No other libraries, frameworks, languages, etc. were used in the development process.*
 
-While I didn't get the job, I did put quite a bit of work into both the design and development, and as a result, decided to share it!
+### What is this project?
+Helcom was a front-end design & development coding challenge for Helcim, a Canadian Fintech startup.
+While I didn't get the job, I wanted to show off the work I put in to making an impression on their team.
 
-This is mainly meant as a mobile experience. 
-As a result, the best UX will be on mobile, however there is desktop functionality just in case of any desktop evaluations.
-
+This is mainly meant as a mobile experience.
 The original design done in Figma can be found below.
 
 ![original figma design screenshot](https://i.imgur.com/mO2LJhL.png)
