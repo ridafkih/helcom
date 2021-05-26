@@ -1,6 +1,6 @@
 # Helcom - Social Media Design & Development
 
-If you'd like to visit the experience, [click here](https://rida.dev/helcom)
+If you'd like to visit the experience, [click here](https://rida.dev/helcom).
 
 Without libraries or frameworks, Helcom (meaning Helcim Community) was developed using HTML, JavaScript, and SCSS.
 
